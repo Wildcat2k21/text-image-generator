@@ -9,4 +9,10 @@ export default defineConfig({
     build: {
         outDir: "dist", // Куда собирать файлы
     },
+    test: {
+        // Указываем среду выполнения тестов
+        environment: "jsdom",
+        // Дополнительные настройки, например, globals
+        globals: true,
+    }
 });
