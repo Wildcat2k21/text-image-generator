@@ -1,10 +1,10 @@
 // Данный модуль предназначен для генерации случайного текста, в котором задаётся:
 // длина для символов конечного текста
 // словарь из которого состоит даннный текст
-// и функция для объединения нескольких словарей в 1 общий
+import { getRandomSign } from "../helpers/dictonaries.js";
 
 //основная функция для генерации случайного текста(определённой длины length) из словаря - dictonary
-function generateRandomText(dictonary, length){
+export default function generateRandomText(dictonary, length){
     const text = [];
     const punctuationMarks = [".","?","!",",",":","-"];
     
@@ -28,19 +28,4 @@ function generateRandomText(dictonary, length){
     }
     // console.log(text) 
     return text;
-}
-
-//функция для получения случайного символа из имеющихся у нас(используется в функции generateRandomText)
-function getRandomSign(dictonary){
-    return Math.floor(Math.random() * dictonary.length);
-}
-
-//функция для объединения произвольного кол-ва словарей
-function uniteDictonaries(...dictionaries){
-    const unitedDictonary = [];
-
-    for(const dict of dictionaries){
-        unitedDictonary.push(...dict);
-    }
-    return unitedDictonary.toString();
 }
