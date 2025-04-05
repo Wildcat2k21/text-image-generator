@@ -7,18 +7,25 @@ import { getRandomSign } from "../helpers/dictonaries.js";
 export default function generateRandomText(dictonary, length){
     let text = "";
     const punctuationMarks = [".","?","!",",",":","-"];
-    
+    const lineBreak = "\n";
+
     for(let i = 0; i < length; ++i){
         const rand = Math.random();
 
         if(rand >= 0.2){
-            let word = dictonary[getRandomSign(dictonary)];            
+            let char = dictonary[getRandomSign(dictonary)];            
            
-            if(i === 0 || (text[i-1] === "." || text[i-1] === "?" || text[i-1] === "!")) {
-                word = word.charAt(0).toUpperCase();
+            const shouldToUpperCase = (i) =>{
+                return (i === 0 || (text[i-1] === "." || text[i-1] === "?" || text[i-1] === "!"));
+            };
+
+            if(shouldToUpperCase(i)) {
+                //в этой строчке добваляется перенос строки
+                if(rand >= 0.6) text += lineBreak;
+                char = char.charAt(0).toUpperCase();                
             }            
-            text += word;
-        }
+            text += char;
+        }        
         else if(i > 0 && 0.2 > rand && rand >= 0.15){
             text += punctuationMarks[getRandomSign(punctuationMarks)];
         }
