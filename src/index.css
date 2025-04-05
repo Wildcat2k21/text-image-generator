@@ -1,0 +1,34 @@
+:root {
+  --primary-color: #333;
+  --secondary-color: #666;
+  --background-color: #f0f0f0;
+  --text-color: #333;
+}
+
+.dark-theme {
+  --primary-color: #333;
+  --secondary-color: #666;
+  --background-color: #222;
+  --text-color: #fff;
+}
+
+.page {
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.sketch-container{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
