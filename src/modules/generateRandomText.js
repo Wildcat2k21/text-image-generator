@@ -1,38 +1,58 @@
 // Данный модуль предназначен для генерации случайного текста, в котором задаётся:
 // длина для символов конечного текста
-// словарь из которого состоит даннный текст
+// словарь, из которого состоит данный текст
 import { getRandomSign } from "../helpers/dictonaries.js";
 
-//основная функция для генерации случайного текста(определённой длины length) из словаря - dictonary
-export default function generateRandomText(dictonary, length){
+export default function generateRandomText(dictionary, length) {
     let text = "";
-    const punctuationMarks = [".","?","!",",",":","-"];
+    const punctuationMarks = [".", "?", "!", ",", ":", "-"];
     const lineBreak = "\n";
+    let shouldToUpperCase = true;
+    let spaceAllowed = true;
+    let punctuationMarkAllowed = true;
 
-    for(let i = 0; i < length; ++i){
+    while (text.length < length) {
         const rand = Math.random();
 
-        if(rand >= 0.2){
-            let char = dictonary[getRandomSign(dictonary)];            
-           
-            const shouldToUpperCase = (i) =>{
-                return (i === 0 || (text[i-1] === "." || text[i-1] === "?" || text[i-1] === "!"));
-            };
-
-            if(shouldToUpperCase(i)) {
-                //в этой строчке добваляется перенос строки
-                if(rand >= 0.6) text += lineBreak;
-                char = char.charAt(0).toUpperCase();                
-            }            
+        if (rand >= 0.2) {
+            // Генерация символов
+            let char = dictionary[getRandomSign(dictionary)];
+            
+            if (shouldToUpperCase) { 
+                char = char.toUpperCase();
+                shouldToUpperCase = false;
+            }
+            
             text += char;
-        }        
-        else if(i > 0 && 0.2 > rand && rand >= 0.15){
-            text += punctuationMarks[getRandomSign(punctuationMarks)];
+            spaceAllowed = true;
+            punctuationMarkAllowed = true;
+        } else if (rand >= 0.05 && rand < 0.2) {
+            // Генерация пробела
+            if (spaceAllowed && text.length + 1 <= length) {
+                text += " ";
+                spaceAllowed = false;
+            }
+            punctuationMarkAllowed = true;
+        } else if (rand < 0.05) {
+            // Генерация знаков препинания, пробела после него и переноса строки
+
+            // После знака препинания у нас генерируется ещё и пробел (т.е 2 символа),
+            // здесь проверятеся что можно добавить ещё 2 символа в наш текст(без этой проверки текст превысит заданную длину) 
+            if (punctuationMarkAllowed && text.length + 2 <= length) {
+                let punctuationMark = punctuationMarks[getRandomSign(punctuationMarks)];
+                text += punctuationMark;
+                text += " ";
+                punctuationMarkAllowed = false;
+
+                if ([".", "?", "!"].includes(punctuationMark)) {
+                    if (rand < 0.02 && text.length + 1 <= length) {
+                        text += lineBreak;
+                    }
+                    shouldToUpperCase = true;
+                }
+                spaceAllowed = false;
+            }
         }
-        else if(i > 0 && 0.15 > rand && rand >= 0){            
-            text += " ";        
-        }          
     }
-    // console.log(text) 
     return text;
 }
