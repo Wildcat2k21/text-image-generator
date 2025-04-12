@@ -43,10 +43,12 @@ export default function generateRandomText(dictionary, length) {
                 text += punctuationMark;
                 text += " ";
                 punctuationMarkAllowed = false;
+                
 
                 if ([".", "?", "!"].includes(punctuationMark)) {
                     if (rand < 0.02 && text.length + 1 <= length) {
                         text += lineBreak;
+                        punctuationMarkAllowed = false;
                     }
                     shouldToUpperCase = true;
                 }
