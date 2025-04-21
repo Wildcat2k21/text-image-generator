@@ -1,6 +1,7 @@
 import "./index.css";
-import Options from "./components/Options.js";
-import Manuscript from "./components/P5_sketches/Manuscript.js";
+import PageOptions from "./components/PageOptions.js";
+import Manuscript from "./components/P5_context2d/index.js";
+import Scene from "./components/P5_webGL/index.js";
 
 const app = document.querySelector(".app");
 const main = document.createElement("main");
@@ -14,6 +15,7 @@ main.innerHTML = /*html*/ `
     </div>
 `;
 
-main.querySelector(".app__options").appendChild(Options());
+main.querySelector(".app__options").appendChild(PageOptions());
 main.querySelector(".p5-sketch-container").appendChild(Manuscript());
+main.querySelector(".p5-sketch-container").appendChild(Scene());
 app.appendChild(main);

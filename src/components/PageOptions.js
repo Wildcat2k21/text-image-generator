@@ -1,7 +1,9 @@
+// Компоненты управления темой на странице предпросмотра
+
 import { Component } from "../utils/Component.js";
 import { toggleTheme, themeInit } from "../utils/ThemeManager.js";
  
-export default function Options() {
+export default function PageOptions() {
     return Component({
         html: /*html*/ `
             <div class="page-theme">

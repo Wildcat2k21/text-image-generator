@@ -3,6 +3,14 @@
   --secondary-color: #666;
   --background-color: #f0f0f0;
   --text-color: #333;
+
+  /* text canvas */
+  --text-canvas-width: 600px;
+  --text-canvas-height: calc(var(text-canvas-width) * 1.41421);
+
+  /* webgl canvas */
+  --webgl-canvas-width: 600px;
+  --webgl-canvas-height: calc(var(--webgl-canvas-width) * 4/3);
 }
 
 .dark-theme {
@@ -31,4 +39,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.p5-context-2d > canvas {
+  width: var(--text-canvas-width) !important;
+  height: var(--text-canvas-height) !important;
+}
+
+.p5-context-webgl > canvas {
+  width: var(--webgl-canvas-width) !important;
+  height: var(--webgl-canvas-height) !important;
 }
