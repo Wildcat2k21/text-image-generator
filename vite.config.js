@@ -12,6 +12,7 @@ export default defineConfig({
     test: {
         // Указываем среду выполнения тестов
         environment: "jsdom",
+        setupFiles: "./vitest.setup.js",
         // Дополнительные настройки, например, globals
         globals: true,
     }
