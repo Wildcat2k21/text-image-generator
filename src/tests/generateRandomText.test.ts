@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import generateRandomText from "../modules/generateRandomText.js";
+import generateRandomText from "../utils/generateRandomText.js";
 
 
 describe("Длина текста в generateRandomText.js", () => {
@@ -10,7 +10,6 @@ describe("Длина текста в generateRandomText.js", () => {
         expect(text.length).toBe(length);
     });
 });
-
 
 describe("Заглавные буквы после знаков пунктуации в generateRandomText", () => {
     it("Должен быть с заглавной буквы после знаков пунктуации(.?!) ", () => {

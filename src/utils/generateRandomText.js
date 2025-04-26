@@ -3,7 +3,7 @@
 // словарь, из которого состоит данный текст
 import { getRandomSign } from "../helpers/dictonaries.js";
 
-export default function generateRandomText(dictionary, length) {
+export function generateRandomText(dictionary, length) {
     let text = "";
     const punctuationMarks = [".", "?", "!", ",", ":", "-"];
     const lineBreak = "\n";

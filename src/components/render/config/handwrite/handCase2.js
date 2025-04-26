@@ -1,8 +1,14 @@
-import { SheetType } from "../../components/P5_context2d/RenderList";
-import { fontNames } from "../../utils/preloadFonts";
-import { randomArrayElement } from "../../helpers/math";
+import { SheetType } from "../../../../components/P5_context2d/RenderList";
+import { fontNames } from "../../../../utils/preloadFonts";
+import { randomArrayElement } from "../../../../helpers/math";
+// import { generateRandomText } from "../../utils/generateRandomText";
+// import { dictonaryRusLower, dictonaryLatLower, dictonaryNumbers } from "../../constants/dictonaries";
 
-export const handCase2 = {
+// Словарь для генерации текста
+// const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
+//generateRandomText(unitDictonary, 1000);
+
+export const handCase2 = () => ({
     char_variation: {
         // Вариация матрицы трансформации для символов
         // Значения в % от ширины скетча
@@ -42,8 +48,8 @@ export const handCase2 = {
         },
         // 6 - rotate [from, to, add]
         rotate: {
-            from: 0,
-            to: 0,
+            from: -Math.PI/4,
+            to: Math.PI/4,
         }
     },
 
@@ -56,26 +62,11 @@ export const handCase2 = {
         // 3 - bottom
         // 4 - height
         transform: {
-            start: {
-                from: 15,
-                to: 15
-            },
-            end: {
-                from: 5,
-                to: 5
-            },
-            top: {
-                from: 5,
-                to: 5
-            },
-            bottom: {
-                from: 5,
-                to: 5
-            },
-            height: {
-                from: 5,
-                to: 5
-            }
+            start: 15,
+            end: 5,
+            top: 5,
+            bottom: 5,
+            height: 5
         },
         // 5 - rotate
         rotate: {
@@ -104,9 +95,12 @@ export const handCase2 = {
     // Название шрифта
     fontName: randomArrayElement(fontNames),
     // Базовый размер шрифта
-    fontSize: 5,
+    fontSize: {
+        from: 15,
+        to: 20
+    },
     // Цвет текста
-    textColor: "#00287A",
+    textColor: "#2D477A",
     // Текст для рендера
-    renderText: "Hello world"
-};
+    renderText: randomArrayElement([0,1,2,3,4,5,6,7,8,9]).toString()
+});

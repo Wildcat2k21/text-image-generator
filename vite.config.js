@@ -15,5 +15,5 @@ export default defineConfig({
         setupFiles: "./vitest.setup.js",
         // Дополнительные настройки, например, globals
         globals: true,
-    }
+    },
 });

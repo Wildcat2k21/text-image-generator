@@ -1,4 +1,4 @@
-export const sceneCase1 = {
+export const sceneCase1 = () => ({
     camera: {
         //no change
         lookAt: {
@@ -38,13 +38,13 @@ export const sceneCase1 = {
     lightning: {
         ambient: {
             from: 100,
-            to: 255
+            to: 200
         },
         pointerLightRGB: {
-            from: [0, 0, 0],
-            to: [100, 100, 100]
+            from: [255, 255, 130],
+            to: [255, 255, 255]
         }
     },
     // Качество рендера листа
     listRenderBufferSize: 600
-};
+});
