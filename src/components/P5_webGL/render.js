@@ -6,7 +6,16 @@ import {
 // Рисуем сцену webGL
 export function P5renderScene(){
     const sketch = this;
-    const {img, sourceCanvas, textureCanvas, skyboxImg, list, camera, lightning} = sketch.renderData;
+    const {
+        img,
+        sourceCanvas,
+        textureCanvas,
+        skyboxImg,
+        list,
+        camera,
+        lightning,
+        orbitControl
+    } = sketch.renderData;
     
     // Копируем содержимое из внешнего канваса
     if (sourceCanvas) {
@@ -26,7 +35,9 @@ export function P5renderScene(){
     sketch.ambientLight(lightning.ambient);
 
     // Камера
-    sketch.orbitControl();
+    if(orbitControl){
+        sketch.orbitControl();
+    }
 
     // === Стол ===
     sketch.push();
@@ -45,7 +56,7 @@ export function P5renderScene(){
         // Смещение листа
         sketch.translate(...list.translateXY, 1);
         sketch.texture(textureCanvas);
-        sketch.specularMaterial(50);
+        sketch.specularMaterial(25);
         sketch.shininess(20);
         sketch.plane(A_FORMAT_WIDTH / 5, A_FORMAT_HEIGHT / 5);
         sketch.pop();

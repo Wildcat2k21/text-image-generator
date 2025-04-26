@@ -26,6 +26,9 @@ export const transformRelativeParams = (variationParams, transformFunction) => {
                 pad: true
             }
         },
-        fontSize: true
+        fontSize: {
+            from: true,
+            to: true
+        }
     }, transformFunction);
 };

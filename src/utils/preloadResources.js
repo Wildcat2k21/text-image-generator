@@ -33,5 +33,8 @@ export function preloadResources() {
                 }
             }, (err) => reject(new Error(`Ошибка загрузки ресурса: ${path}. Текст ошибки: ${err}`)));
         });
+
+        // Удаляем временный скетч
+        tempSketch.remove();
     });
 }

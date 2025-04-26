@@ -1,6 +1,6 @@
-import { SheetType } from "../../components/P5_context2d/RenderList";
-import { fontNames } from "../../utils/preloadFonts";
-import { randomArrayElement } from "../../helpers/math";
+import { SheetType } from "../../../components/P5_context2d/RenderList";
+import { fontNames } from "../../../utils/preloadFonts";
+import { randomArrayElement } from "../../../helpers/math";
 
 export const handCase4 = {
     char_variation: {

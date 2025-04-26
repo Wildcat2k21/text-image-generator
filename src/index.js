@@ -1,5 +1,7 @@
 import "./index.css";
 import PageOptions from "./components/PageOptions.js";
+import PreviewOptions from "./components/PreviewOptions.js";
+import RenderOptions from "./components/render/index.js";
 import Manuscript from "./components/P5_context2d/index.js";
 import Scene from "./components/P5_webGL/index.js";
 
@@ -15,7 +17,11 @@ main.innerHTML = /*html*/ `
     </div>
 `;
 
-main.querySelector(".app__options").appendChild(PageOptions());
+// Добавляем скетчи
 main.querySelector(".p5-sketch-container").appendChild(Manuscript());
 main.querySelector(".p5-sketch-container").appendChild(Scene());
 app.appendChild(main);
+
+main.querySelector(".app__options").appendChild(PageOptions());
+main.querySelector(".app__options").appendChild(PreviewOptions());
+main.querySelector(".app__options").appendChild(RenderOptions()); //Взаимодействие с рендером
