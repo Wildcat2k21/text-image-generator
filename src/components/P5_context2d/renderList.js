@@ -15,8 +15,8 @@ const defaultLinesOptions = {
 };
   
 // Рендерит различные типы листов
-export function renderList({type = SheetType.GRID, background = "#fff", linesOptions = defaultLinesOptions, borderLine}){
-    if (!Object.values(SheetType).includes(type)) {
+export function renderList({sheetType = SheetType.GRID, background = "#fff", linesOptions = defaultLinesOptions, borderLine}){
+    if (!Object.values(SheetType).includes(sheetType)) {
         throw new Error("Тип листа не поддерживается. Поддерживаемые типы: grid, lines, backgroundOnly");
     }
 
@@ -30,11 +30,13 @@ export function renderList({type = SheetType.GRID, background = "#fff", linesOpt
     // Устанавливаем фон
     p5.background(background);
 
+    // Устанавливаем ширину линии
+    p5.strokeWeight(linesOptions.strokeWeight);
+
     // Рендерим лист в клетку
-    if(type !== SheetType.BACKGROUND_ONLY){
+    if(sheetType !== SheetType.BACKGROUND_ONLY){
         // Устанавливаем ширину линии и цвет
         p5.stroke(linesOptions.color);
-        p5.strokeWeight(linesOptions.strokeWeight);
 
         // Рисуем горизонтальные линии
         for(let cellY = 0; cellY < height; cellY += linesOptions.size){
@@ -42,7 +44,7 @@ export function renderList({type = SheetType.GRID, background = "#fff", linesOpt
         }
 
         // Рисуем вертикальные линии
-        if(type === SheetType.GRID){
+        if(sheetType === SheetType.GRID){
             for(let cellX = 0; cellX < width; cellX += linesOptions.size){
                 p5.line(cellX, 0, cellX, height);
             }
@@ -50,14 +52,14 @@ export function renderList({type = SheetType.GRID, background = "#fff", linesOpt
     }
 
     // Линия слева
-    if(borderLine?.onLeft){
+    if(borderLine && borderLine.onLeft){
         // Устанавливаем ширину линии и цвет
         p5.stroke(borderLine.color);
         p5.line(borderLine.pad, 0, borderLine.pad, height);
     }
     
     // Линия справа
-    if(!borderLine?.onLeft){
+    if(borderLine && !borderLine.onLeft){
         p5.stroke(borderLine.color);
         p5.line(width - borderLine.pad, 0, width - borderLine.pad, height);
     }

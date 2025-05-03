@@ -1,8 +1,13 @@
-import { SheetType } from "../../components/P5_context2d/RenderList";
-import { fontNames } from "../../utils/preloadFonts";
-import { randomArrayElement } from "../../helpers/math";
+import { SheetType } from "../../../P5_context2d/renderList";
+import { fontNames } from "../../../../utils/preloadFonts";
+import { randomArrayElement } from "../../../../helpers/math";
+import { generateRandomText } from "../../../../utils/generateRandomText";
+import { dictonaryRusLower, dictonaryLatLower, dictonaryNumbers } from "../../../../constants/dictonaries";
 
-export const handCase3 = {
+// Словарь для генерации текста
+const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
+
+export const handCase3 = () => ({
     char_variation: {
         // Вариация матрицы трансформации для символов
         // Значения в % от ширины скетча
@@ -56,26 +61,11 @@ export const handCase3 = {
         // 3 - bottom
         // 4 - height
         transform: {
-            start: {
-                from: 15,
-                to: 15
-            },
-            end: {
-                from: 5,
-                to: 5
-            },
-            top: {
-                from: 5,
-                to: 5
-            },
-            bottom: {
-                from: 5,
-                to: 5
-            },
-            height: {
-                from: 5,
-                to: 5
-            }
+            start: 15,
+            end: 10,
+            top: 10,
+            bottom: 10,
+            height: 5
         },
         // 5 - rotate
         rotate: {
@@ -89,13 +79,13 @@ export const handCase3 = {
         background: "#DEDEDE",
         // параметры линий листа
         linesOptions: {
-            size: 3.3783,
+            size: 3.03, //lp - 3.9, lg - 3.03
             strokeWeight: 0.25,
             color: "#4E98CE"
         },
         // Параметры линий полей листа
         borderLine: {
-            pad: 13.5132,
+            pad: 12.12,
             onLeft: true,
             color: "#C22929",
         },
@@ -104,9 +94,12 @@ export const handCase3 = {
     // Название шрифта
     fontName: randomArrayElement(fontNames),
     // Базовый размер шрифта
-    fontSize: 5,
+    fontSize: {
+        from: 6,
+        to: 6
+    },
     // Цвет текста
     textColor: "#00287A",
     // Текст для рендера
-    renderText: "Hello world"
-};
+    renderText: generateRandomText(unitDictonary, 1000),
+});

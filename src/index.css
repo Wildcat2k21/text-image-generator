@@ -8,11 +8,11 @@
 
   /* text canvas */
   --text-canvas-width: 300px;
-  --text-canvas-height: calc(var(text-canvas-width) * 1.41421);
+  --text-canvas-height: calc(var(text-canvas-width) * 20.5/16.5); /*формат листа foolio/2*/
 
   /* webgl canvas */
-  --webgl-canvas-width: 300px;
-  --webgl-canvas-height: calc(var(--webgl-canvas-width) * 4/3);
+  --webgl-canvas-width: 600px;
+  --webgl-canvas-height: calc(var(--webgl-canvas-width) * 4/3); 
 }
 
 .dark-theme {

@@ -13,12 +13,6 @@ export default function PreviewOptions() {
                         Контроль вращения камеры 3D сцены
                         <input class="preview-options__orbit-checkbox" type="checkbox" id="webgl-orbit-checkbox">
                     </label>
-    
-                    <!-- режим презентации -->
-                    <label class="preview-options__slides-label label">
-                        Режим презентации
-                        <input class="preview-options__slides-checkbox" type="checkbox" id="slides-checkbox">
-                    </label>
                 </fieldset>
             </div>
         `,
@@ -29,14 +23,6 @@ export default function PreviewOptions() {
 
             $orbitCheckbox.addEventListener("change", (e) => {
                 localStorage.setItem("orbit", e.target.checked);
-            });
-
-            // Инициализируем состояние из localStorage для slideshow (режим презентации)
-            const $slidesCheckbox = this.querySelector("#slides-checkbox");
-            $slidesCheckbox.checked = localStorage.getItem("run_slides") === "true";
-
-            $slidesCheckbox.addEventListener("change", (e) => {
-                localStorage.setItem("run_slides", e.target.checked);
             });
         }
     });

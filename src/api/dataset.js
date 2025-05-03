@@ -13,6 +13,6 @@ export const sendImages = async (data) => {
     });
 
 
-    const response = await http.post("/dataset", formData);
+    const response = await http.post("/images-data", formData);
     return response.data;
 };

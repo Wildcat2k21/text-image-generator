@@ -1,6 +1,6 @@
-import { createRenderChars } from "./CreateRenderChars.js";
+import { createRenderChars } from "./createRenderChars.js";
 import { charsRenderMetrics, linesRenderMetrics } from "../../helpers/metricsCalculation.js";
-import { renderList } from "./RenderList.js";
+import { renderList } from "./renderList.js";
 import { randBetween, relativeToInParcent } from "../../helpers/math/index.js";
 import { transformRelativeParams } from "./helpers";
 
@@ -44,10 +44,10 @@ export function P5renderText(textRenderConfig) {
     // Рендер символов
     for (const { char, transform } of renderChars) {
         p5.push();
-        // p5.applyMatrix(...transform);
-        // p5.text(char, 0, 0);
-        p5.applyMatrix(...transform.slice(0, 4), p5.width/2 , p5.height/2);
-        p5.text(char, -p5.textWidth(char)/2 - randBetween([-50, 50]), -p5.textAscent()/2 - randBetween([-50, 50]));
+        p5.applyMatrix(...transform);
+        p5.text(char, 0, 0);
+        // p5.applyMatrix(...transform.slice(0, 4), p5.width/2 , p5.height/2);
+        // p5.text(char, -p5.textWidth(char)/2, -p5.textAscent()/2 + 11);
         p5.pop();
     }
 }

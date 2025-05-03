@@ -1,12 +1,11 @@
-import { SheetType } from "../../../../components/P5_context2d/RenderList";
+import { SheetType } from "../../../P5_context2d/renderList";
 import { fontNames } from "../../../../utils/preloadFonts";
 import { randomArrayElement } from "../../../../helpers/math";
-// import { generateRandomText } from "../../utils/generateRandomText";
-// import { dictonaryRusLower, dictonaryLatLower, dictonaryNumbers } from "../../constants/dictonaries";
+import { generateRandomText } from "../../../../utils/generateRandomText";
+import { dictonaryRusLower, dictonaryLatLower, dictonaryNumbers } from "../../../../constants/dictonaries";
 
 // Словарь для генерации текста
-// const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
-//generateRandomText(unitDictonary, 1000);
+const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
 
 export const handCase1 = () => ({
     char_variation: {
@@ -48,8 +47,8 @@ export const handCase1 = () => ({
         },
         // 6 - rotate [from, to, add]
         rotate: {
-            from: -Math.PI/2,
-            to: Math.PI/2,
+            from: 0,
+            to: 0,
         }
     },
 
@@ -62,10 +61,10 @@ export const handCase1 = () => ({
         // 3 - bottom
         // 4 - height
         transform: {
-            start: 15,
-            end: 5,
-            top: 5,
-            bottom: 5,
+            start: 10,
+            end: 15,
+            top: 10,
+            bottom: 10,
             height: 5
         },
         // 5 - rotate
@@ -80,14 +79,14 @@ export const handCase1 = () => ({
         background: "#DEDEDE",
         // параметры линий листа
         linesOptions: {
-            size: 3.3783,
+            size: 3.03, //lp - 3.9, lg - 3.03
             strokeWeight: 0.25,
             color: "#4E98CE"
         },
         // Параметры линий полей листа
         borderLine: {
-            pad: 13.5132,
-            onLeft: true,
+            pad: 12.12,
+            onLeft: false,
             color: "#C22929",
         },
     },
@@ -96,11 +95,11 @@ export const handCase1 = () => ({
     fontName: randomArrayElement(fontNames),
     // Базовый размер шрифта
     fontSize: {
-        from: 15,
-        to: 20
+        from: 6,
+        to: 6
     },
     // Цвет текста
     textColor: "#00287A",
     // Текст для рендера
-    renderText: randomArrayElement([0,1,2,3,4,5,6,7,8,9]).toString()
+    renderText: generateRandomText(unitDictonary, 1000),
 });

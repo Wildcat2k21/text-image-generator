@@ -1,7 +1,7 @@
 // Компоненты управления темой на странице предпросмотра
 
 import { Component } from "../utils/Component.js";
-import { toggleTheme, themeInit } from "../utils/ThemeManager.js";
+import { toggleTheme, themeInit } from "../utils/themeManager.js";
  
 export default function PageOptions() {
     return Component({

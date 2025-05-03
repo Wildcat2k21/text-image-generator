@@ -8,7 +8,14 @@ export const FORMAT_LIST = {
     TENSOR: "tensor"
 };
 
-export async function generateImages(listSource, sceneSource, amount = 1, format = FORMAT_LIST.BLOB, jpegComp = 0.9){
+export async function generateImages(
+    listSource,
+    sceneSource,
+    previewMode,
+    amount,
+    format,
+    jpegComp
+){
     if(!Object.values(FORMAT_LIST).includes(format)){
         throw new Error(`Формат не распознан: ${format}`);
     }
@@ -20,17 +27,21 @@ export async function generateImages(listSource, sceneSource, amount = 1, format
     const images = [];
 
     for(let i = 0; i < amount; i++){
-        const randomHandwriteCase = randomArrayElement(cases.handwrite);
-        const randomSceneCase = randomArrayElement(cases.scene);
 
-        const currentHandwriteCase = randomHandwriteCase();
+        const randomCase = randomArrayElement(cases.list);
+        const randHandSubCase = randomArrayElement(randomCase.handwrite);
+        const randSceneSubCase = randomArrayElement(randomCase.scene);
+
+        const randomHandwriteCase = randHandSubCase();
+        const randomSceneCase = randSceneSubCase();
+
         // Вызыварем рендер со случайными кейсом параметров листа
-        listSource.renderText(currentHandwriteCase);
-        const textMetrics = currentHandwriteCase.renderText;//Метод для получения метрик текста - listSource.getTextMetrics();
+        listSource.renderText(randomHandwriteCase);
+        const textMetrics = randomHandwriteCase.renderText;//Метод для получения метрик текста - listSource.getTextMetrics();
 
         // Вызыварем рендер со случайными кейсом параметров сцены
-        const sceneParams = generateParams(randomSceneCase());
-        const sceneCanvas = sceneSource.renderScene(sceneParams);
+        const sceneParams = generateParams(randomSceneCase);
+        const sceneCanvas = sceneSource.renderScene(sceneParams, previewMode);
 
         // Создаем blob сцены webGL
         if(format === FORMAT_LIST.BLOB){

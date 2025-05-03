@@ -1,7 +1,7 @@
 import { Images, Models } from "../../../../utils/preloadResources";
 import { SheetType } from "../../../P5_context2d/renderList";
 
-export const sceneCase2 = () => ({
+export const sceneCase4 = () => ({
     camera: {
         //no change
         lookAt: {
@@ -45,7 +45,7 @@ export const sceneCase2 = () => ({
             ]
         },
         listTypes: SheetType.LINES, 
-        renderTextOnList: 1 //0 - left, 1 - right
+        renderTextOnList: 0 //0 - left, 1 - right
     },
     table: {
         texture: [

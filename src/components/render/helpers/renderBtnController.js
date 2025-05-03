@@ -10,7 +10,6 @@ export function RenderBtnController(btnElement, renderController, startRenderCal
             // Инициализируем контроллер рендера
             if(!renderController.renderIsStarted){
                 startRenderCallback(renderOptions);
-                await renderController.init();
                 renderController.startRender(renderOptions).then(() => {
                     confirm("Рендер был завершен ℹ️");
                     target.textContent = "Создать датасет";

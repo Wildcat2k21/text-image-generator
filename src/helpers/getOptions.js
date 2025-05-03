@@ -7,7 +7,6 @@ export const getRenderOptions = (elem = document) => {
 
 export const getPreviewOptions = (elem = document) => {
     const orbit = elem.querySelector("#webgl-orbit-checkbox").checked;
-    const slides = elem.querySelector("#slides-checkbox").checked;
 
-    return { orbit, slides };
+    return { orbit };
 };

@@ -26,6 +26,9 @@ export default function Manuscript() {
                 const paramsWithFont = {...variationParams, font: this._p5Fonts.getCurrent(variationParams.fontName)};
                 this._p5Instance.draw = () => P5renderText.call(this, paramsWithFont);
 
+                // Временно нахуй
+                console.log(variationParams.fontName);
+
                 // Перерисовыем скетч
                 this._p5Instance.redraw();
 

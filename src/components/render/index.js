@@ -4,6 +4,7 @@ import { Component } from "../../utils/Component.js";
 import { RenderController } from "./RenderController.js";
 import { RenderBtnController } from "./helpers/renderBtnController.js";
 import { dataset } from "../../api/index.js";
+import { getRenderOptions, getPreviewOptions } from "../../helpers/getOptions";
  
 export default function RenderOptions() {
     return Component({
@@ -73,7 +74,26 @@ export default function RenderOptions() {
                 }
             };
 
+            // Инициализируем контроллер рендера
             const renderController = new RenderController(progressCallback);
+            await renderController.init();
+
+            // Делаем превью рендера
+            await renderController.generatorWithSources(
+                1,
+                getRenderOptions().compress,
+                getPreviewOptions().orbit
+            ); //1 картинка, качество по умолчанию
+
+            // Делаем ререндер для чекбокса (Контроль вращения камерой)
+            const $orbitCheckbox = document.querySelector("#webgl-orbit-checkbox");
+            $orbitCheckbox.addEventListener("change", async ({ target }) => {
+                await renderController.generatorWithSources(
+                    1,
+                    getRenderOptions().compress,
+                    target.checked
+                ); //1 картинка, качество по умолчанию
+            });
 
             // Получаем конопку рендера
             const $renderBtn = this.querySelector("#render-btn");
@@ -81,6 +101,7 @@ export default function RenderOptions() {
             RenderBtnController.call(this, $renderBtn, renderController, (renderOptions) => {
                 progressCallback([], 0, renderOptions.amount);
                 $preventRenderBtn.classList.toggle("render-options__button--disabled", false);
+                $orbitCheckbox.checked && ($orbitCheckbox.checked = false);
             });
 
             // Получаем кнопку остановки рендера

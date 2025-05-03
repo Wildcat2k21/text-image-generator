@@ -12,15 +12,14 @@ export function initSketch (renderOptions, renderFunction, orbitControl) {
 
         const {
             camera,
-            list,
+            note,
             table,
             lightning,
             listRenderBufferSize,
         } = renderOptions;
 
-        // Используем подгруженные ресурсы
-        let img = this._p5Resources.getCurrent(table.texture);
-        let skyboxImg = this._p5Resources.getCurrent("skybox");
+        // Ресурсы изображений и моделей
+        const resourceManager = this._p5Resources;
 
         sketch.setup = () => {
             // Тут задается размер нашей условной камеры
@@ -30,11 +29,11 @@ export function initSketch (renderOptions, renderFunction, orbitControl) {
             // Параметры перспективы и отрисовки
             // Для избавления эффектра отрогонольной проекции
             // При маленьких размерах скетчей
-            let fov = Math.PI / 3; // Угол обзора
-            let aspect = sketch.width / sketch.height;
-            let near = 0.1; // Минимальное расстояние
-            let far = 12000; // Максимальное расстояние
-            sketch.perspective(fov, aspect, near, far);
+            // let fov = Math.PI / 3; // Угол обзора
+            // let aspect = sketch.width / sketch.height;
+            // let near = 0.1; // Минимальное расстояние
+            // let far = 12000; // Максимальное расстояние
+            // sketch.perspective(fov, aspect, near, far);
 
             cam = sketch.createCamera(); // создаёт и возвращает текущую камеру
             sketch.noStroke();
@@ -57,7 +56,16 @@ export function initSketch (renderOptions, renderFunction, orbitControl) {
             cam.lookAt(...camera.lookAt);
 
             // Сохраняем данные для рендера
-            sketch.renderData = {img, sourceCanvas, textureCanvas, skyboxImg, list, camera, lightning, orbitControl};
+            sketch.renderData = {
+                resourceManager,
+                note,
+                table,
+                sourceCanvas,
+                textureCanvas,
+                camera,
+                lightning,
+                orbitControl
+            };
         };
 
         sketch.draw = renderFunction.bind(sketch);

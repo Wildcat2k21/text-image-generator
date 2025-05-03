@@ -1,8 +1,7 @@
 
 import { SCENE_PARENT_ID, MANUSCRIPT_PARENT_ID } from "../../constants/sketch_selectors";
-import { generateImages } from "./helpers/generateImages";
-import { FORMAT_LIST } from "./helpers/generateImages";
-import { pausablePromise } from "../../utils/PausablePromise";
+import { generateImages, FORMAT_LIST } from "./helpers/generateImages";
+import { pausablePromise } from "../../utils/pausablePromise";
 
 const MAX_IMAGES_PER_REQUEST = 10;
 
@@ -17,6 +16,16 @@ export function RenderController(processCallback) {
             await this._$manuscript.init();
             await this._$scene.init();
         }
+
+        this.generatorWithSources = (imagesCount, jpegComp, previewMode = false) => 
+            generateImages(
+                this._$manuscript,
+                this._$scene,
+                previewMode || false,
+                imagesCount || 1,
+                FORMAT_LIST.BLOB,
+                jpegComp || 9
+            );
 
         // Инициализируем промис для блокировки потока в случае паузы
         this.pauseRenderPromise = pausablePromise();
@@ -38,14 +47,9 @@ export function RenderController(processCallback) {
             // Отбработка паузы (Если будет вызван метод pauseRender)
             await this.pauseRenderPromise.waitIfPaused();
 
-            // Устаналиваем формат как BLOB
-            renderOptions.format = FORMAT_LIST.BLOB;
-
             // Генерируем изображения
-            const images = await generateImages(
-                this._$manuscript,
-                this._$scene, IMAGES_PER_REQUEST,
-                renderOptions.format,
+            const images = await this.generatorWithSources(
+                IMAGES_PER_REQUEST,
                 renderOptions.jpegComp
             );
 
