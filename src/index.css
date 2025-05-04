@@ -7,11 +7,11 @@
   --discent-color: rgba(0, 0, 0, 0.33);
 
   /* text canvas */
-  --text-canvas-width: 300px;
+  --text-canvas-width: 90%;
   --text-canvas-height: calc(var(text-canvas-width) * 20.5/16.5); /*формат листа foolio/2*/
 
   /* webgl canvas */
-  --webgl-canvas-width: 600px;
+  --webgl-canvas-width: 90%;
   --webgl-canvas-height: calc(var(--webgl-canvas-width) * 4/3); 
 }
 
@@ -29,7 +29,7 @@
 }
 
 .app__content{
-  width: clamp(800px, 1440px, 100%);
+  width: clamp(1048px, 1440px, 100%);
   display: block;
   margin: auto;
   box-sizing: border-box;
@@ -37,6 +37,10 @@
 }
 
 .app__title{
+  text-align: center;
+}
+
+.app__subtitle{
   text-align: center;
 }
 
@@ -64,6 +68,10 @@
   margin: 25px auto;
   display: flex;
   justify-content: space-between;
+}
+
+.render-options__label {
+  padding-top: 10px;
 }
 
 .render-options__button{
@@ -124,6 +132,11 @@
 }
 
 .p5-context-webgl > canvas {
+  width: var(--webgl-canvas-width) !important;
+  height: var(--webgl-canvas-height) !important;
+}
+
+.filters-preview__canvas {
   width: var(--webgl-canvas-width) !important;
   height: var(--webgl-canvas-height) !important;
 }

@@ -1,7 +1,7 @@
 import { createRenderChars } from "./createRenderChars.js";
-import { charsRenderMetrics, linesRenderMetrics } from "../../helpers/metricsCalculation.js";
+import { charsRenderMetrics, linesRenderMetrics } from "@helpers/metricsCalculation.js";
 import { renderList } from "./renderList.js";
-import { randBetween, relativeToInParcent } from "../../helpers/math/index.js";
+import { randBetween, relativeToInParcent } from "@helpers/math/index.js";
 import { transformRelativeParams } from "./helpers";
 
 export function P5renderText(textRenderConfig) {

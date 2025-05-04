@@ -7,6 +7,7 @@ const resourcePaths = {
         table1: "/images/table-texture1.jpg",
         table2: "/images/table-texture2.jpg",
         table3: "/images/table-texture3.jpg",
+        table4: "/images/table-texture4.jpg",
 
         // UV beak текстура тетради
         noteTexture: "/images/note-texture.png",
@@ -89,6 +90,7 @@ export function preloadResources() {
                     images.set(key, img);
                     checkDone();
                 },
+                // eslint-disable-next-line no-unused-vars
                 err => reject(new Error(`Ошибка загрузки изображения: ${path}`))
             );
         }
@@ -102,6 +104,7 @@ export function preloadResources() {
                     models.set(key, model);
                     checkDone();
                 },
+                // eslint-disable-next-line no-unused-vars
                 err => reject(new Error(`Ошибка загрузки OBJ модели: ${paths.obj}`))
             );
         }

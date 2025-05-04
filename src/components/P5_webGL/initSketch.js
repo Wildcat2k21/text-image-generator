@@ -2,7 +2,8 @@ import p5 from "p5";
 import { 
     PHONE_CAMERA_WIDTH,
     PHONE_CAMERA_HEIGHT,
-} from "../../constants/P5_sketch_sizes";
+} from "@constants/P5_sketch_sizes";
+import { MANUSCRIPT_PARENT_ID } from "@constants/sketch_selectors";
 
 export function initSketch (renderOptions, renderFunction, orbitControl) {
     return new p5((sketch) => {
@@ -49,13 +50,18 @@ export function initSketch (renderOptions, renderFunction, orbitControl) {
             textureCanvas.pixelDensity(1); // важно для стабильности в WebGL
     
             // Получаем внешний canvas
-            sourceCanvas = document.querySelector(".p5-context-2d > canvas");
+            sourceCanvas = document.querySelector(`#${MANUSCRIPT_PARENT_ID} > canvas`);
 
             // Устанавливаем камеру
-            cam.setPosition(...camera.position);
-            cam.lookAt(...camera.lookAt);
+            const [campX, campY, campZ] = camera.position;
+            const [camlX, camlY, camlZ] = camera.lookAt;
 
-            // Сохраняем данные для рендера
+            const shiftCamCompX = camera.targetList === 0 ? -46.5 : 46.5;
+
+            cam.setPosition(campX + shiftCamCompX, campY, campZ);
+            cam.lookAt(camlX + shiftCamCompX, camlY, camlZ);
+
+            // Сохраняем данные для рендераasd
             sketch.renderData = {
                 resourceManager,
                 note,

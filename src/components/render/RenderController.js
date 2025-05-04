@@ -1,7 +1,12 @@
 
-import { SCENE_PARENT_ID, MANUSCRIPT_PARENT_ID } from "../../constants/sketch_selectors";
+import { 
+    SCENE_PARENT_ID,
+    MANUSCRIPT_PARENT_ID,
+    FILTER_PARENT_ID
+} from "@constants/sketch_selectors";
+
 import { generateImages, FORMAT_LIST } from "./helpers/generateImages";
-import { pausablePromise } from "../../utils/pausablePromise";
+import { pausablePromise } from "@utils/pausablePromise";
 
 const MAX_IMAGES_PER_REQUEST = 10;
 
@@ -9,6 +14,7 @@ export function RenderController(processCallback) {
     this.init = async function(){
         this._$manuscript = document.querySelector("#" + MANUSCRIPT_PARENT_ID);
         this._$scene = document.querySelector("#" + SCENE_PARENT_ID);
+        this._$filter = document.querySelector("#" + FILTER_PARENT_ID);
         this.renderIsStarted = false;
 
         // Инициируем подгрузку ресурсов
@@ -21,6 +27,7 @@ export function RenderController(processCallback) {
             generateImages(
                 this._$manuscript,
                 this._$scene,
+                this._$filter,
                 previewMode || false,
                 imagesCount || 1,
                 FORMAT_LIST.BLOB,

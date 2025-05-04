@@ -1,10 +1,15 @@
 // Компоненты управления темой на странице предпросмотра
 
-import { Component } from "../../utils/Component.js";
+import { Component } from "@utils/Component.js";
 import { RenderController } from "./RenderController.js";
 import { RenderBtnController } from "./helpers/renderBtnController.js";
-import { dataset } from "../../api/index.js";
-import { getRenderOptions, getPreviewOptions } from "../../helpers/getOptions";
+import { getRenderOptions, getPreviewOptions } from "@helpers/getOptions";
+import { FILTER_PARENT_ID } from "@constants/sketch_selectors.js";
+import {
+    progressCallbackFactory,
+    handleStopRender,
+    orbitControlHandler
+} from "./helpers/other.js";
  
 export default function RenderOptions() {
     return Component({
@@ -13,17 +18,17 @@ export default function RenderOptions() {
                 <h3 class="header h3-header">Создание датасета</h3>
 
                 <fieldset class="render-options__fieldset fieldset">                    
-                    <label class="render-options__amount-label label">
+                    <label class="render-options__label label">
                         Количество экземпляров
                         <input type="number" min="1" max="1000000" value="1000" id="data-amount-input">
                     </label>
-                    <label class="render-options__quality-label label">
+                    <label class="render-options__label label">
                         Качество сжатия формата JPEG
                         <input type="number" min="1" max="10" value="9" id="data-quality-input">
                     </label>
                 </fieldset>
 
-                <h4 class="header h4-header">Линия прогресса</h4>
+                <h4 class="header h4-header render-options__header">Линия прогресса</h4>
                 <div class="progress-bar">
                     <div class="progress-bar__fill">
                         <span class="progress-bar__percent">0%</span>
@@ -35,8 +40,8 @@ export default function RenderOptions() {
                     <button class="render-options__button render-options__button--disabled" id="prevent-render-btn">Остановить</button>
                 </div>
 
-                <h3 class="header h3-header">Примечание</h3>
-                <p>
+                <h3 class="header h3-header render-options__header">Примечание</h3>
+                <p class="render-options__text">
                     💡 Подробная инструкция по использованию проекта представлена в 
                     <code class="render-options__code">README.MD</code>.
                 </p>
@@ -59,20 +64,10 @@ export default function RenderOptions() {
                 localStorage.setItem("compress", e.target.value);
             });
 
-            const progressCallback = async (imageDataChunk, currentStep, totalSteps) => {
-                const percent = (currentStep / totalSteps) * 100;
-                this.querySelector(".progress-bar__percent").textContent = `${percent.toFixed(2)}%`;
-                this.querySelector(".progress-bar__fill").style.width = `${percent}%`;
+            // === контроль рендера ===
 
-                if(imageDataChunk.length){
-                    try{
-                        await dataset.sendImages(imageDataChunk);
-                    }
-                    catch(err){
-                        confirm(err);
-                    }
-                }
-            };
+            // Получаем коллбэк прогресса
+            const progressCallback = progressCallbackFactory.call(this);
 
             // Инициализируем контроллер рендера
             const renderController = new RenderController(progressCallback);
@@ -82,39 +77,29 @@ export default function RenderOptions() {
             await renderController.generatorWithSources(
                 1,
                 getRenderOptions().compress,
-                getPreviewOptions().orbit
+                getPreviewOptions().orbit,
             ); //1 картинка, качество по умолчанию
+
+            const filterController = document.querySelector(`#${FILTER_PARENT_ID}`).filterController;
 
             // Делаем ререндер для чекбокса (Контроль вращения камерой)
             const $orbitCheckbox = document.querySelector("#webgl-orbit-checkbox");
-            $orbitCheckbox.addEventListener("change", async ({ target }) => {
-                await renderController.generatorWithSources(
-                    1,
-                    getRenderOptions().compress,
-                    target.checked
-                ); //1 картинка, качество по умолчанию
-            });
+            orbitControlHandler($orbitCheckbox, renderController, filterController);
 
             // Получаем конопку рендера
             const $renderBtn = this.querySelector("#render-btn");
 
+            // Инициализируем контроллер кнопки рендера
             RenderBtnController.call(this, $renderBtn, renderController, (renderOptions) => {
                 progressCallback([], 0, renderOptions.amount);
                 $preventRenderBtn.classList.toggle("render-options__button--disabled", false);
                 $orbitCheckbox.checked && ($orbitCheckbox.checked = false);
+                filterController.looped && filterController.stopLoop();
             });
 
             // Получаем кнопку остановки рендера
             const $preventRenderBtn = this.querySelector("#prevent-render-btn");
-            $preventRenderBtn.addEventListener("click", () => {
-                renderController.stopRender();
-                $renderBtn.textContent = "Создать датасет";
-                $renderBtn.style.backgroundColor = "#98e674";
-                $renderBtn.pauseFlag = false;
-
-                // Делаем кнопку неактивной
-                $preventRenderBtn.classList.add("render-options__button--disabled");
-            });
+            handleStopRender($preventRenderBtn, $renderBtn, renderController);
         }
     });
 }

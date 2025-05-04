@@ -10,6 +10,9 @@ import { sceneCase2 } from "./scene/sceneCase2";
 import { sceneCase3 } from "./scene/sceneCase3";
 import { sceneCase4 } from "./scene/sceneCase4";
 
+// Фильтры
+import { filterCase1 } from "./filters/filterCase1";
+
 export const cases = {
     list: [{
         handwrite: [
@@ -17,30 +20,42 @@ export const cases = {
         ],
         scene: [
             sceneCase1
-        ]
-    },
-    {
-        handwrite: [
-            handCase2,
         ],
-        scene: [
-            sceneCase2
+        filters: [
+            filterCase1
         ]
-    },
-    {
-        handwrite: [
-            handCase3,
-        ],
-        scene: [
-            sceneCase3
-        ]
-    },
-    {
-        handwrite: [
-            handCase4,
-        ],
-        scene: [
-            sceneCase4
-        ]
+    // },
+    // {
+    //     handwrite: [
+    //         handCase2,
+    //     ],
+    //     scene: [
+    //         sceneCase2
+    //     ],
+    //     filters: [
+    //         filterCase1
+    //     ]
+    // },
+    // {
+    //     handwrite: [
+    //         handCase3,
+    //     ],
+    //     scene: [
+    //         sceneCase3
+    //     ],
+    //     filters: [
+    //         filterCase1
+    //     ]
+    // },
+    // {
+    //     handwrite: [
+    //         handCase4,
+    //     ],
+    //     scene: [
+    //         sceneCase4
+    //     ],
+    //     filters: [
+    //         filterCase1
+    //     ]
     }]
 };

@@ -1,6 +1,11 @@
-import { generateParams } from "../../../utils/params";
+import { generateParams } from "@utils/params";
 import { cases } from "../config/index";
-import { randomArrayElement } from "../../../helpers/math";
+import { randomArrayElement } from "@helpers/math";
+import { 
+    getFilterParams,
+    getSceneParams,
+    getHandCaseParamsRaw
+} from "./other";
 
 export const FORMAT_LIST = {
     BLOB: "blob",
@@ -11,6 +16,7 @@ export const FORMAT_LIST = {
 export async function generateImages(
     listSource,
     sceneSource,
+    { filterController },
     previewMode,
     amount,
     format,
@@ -27,26 +33,28 @@ export async function generateImages(
     const images = [];
 
     for(let i = 0; i < amount; i++){
-
-        const randomCase = randomArrayElement(cases.list);
-        const randHandSubCase = randomArrayElement(randomCase.handwrite);
-        const randSceneSubCase = randomArrayElement(randomCase.scene);
-
-        const randomHandwriteCase = randHandSubCase();
-        const randomSceneCase = randSceneSubCase();
+        const randomGroup = randomArrayElement(cases.list);
+        const randomHandwriteCase = getHandCaseParamsRaw(randomGroup);
+        const sceneParams = getSceneParams(randomGroup);
+        const filterParams = getFilterParams(randomGroup);
 
         // Вызыварем рендер со случайными кейсом параметров листа
         listSource.renderText(randomHandwriteCase);
         const textMetrics = randomHandwriteCase.renderText;//Метод для получения метрик текста - listSource.getTextMetrics();
 
-        // Вызыварем рендер со случайными кейсом параметров сцены
-        const sceneParams = generateParams(randomSceneCase);
-        const sceneCanvas = sceneSource.renderScene(sceneParams, previewMode);
+        // Также возвращает ссылку на Canvas сцены
+        sceneSource.renderScene(sceneParams, previewMode);
+
+        // Превью фильтров с автообновлением
+        previewMode ? filterController.startLoop(undefined, filterParams)
+            : filterController.update(filterParams);
+
+        const outputCanvas = filterController.canvas;
 
         // Создаем blob сцены webGL
         if(format === FORMAT_LIST.BLOB){
             const imageBlob = await new Promise((resolve) => {
-                sceneCanvas.toBlob((blob) => {
+                outputCanvas.toBlob((blob) => {
                     resolve(blob);
                 }, "image/jpeg", jpegComp);
             });
@@ -57,7 +65,7 @@ export async function generateImages(
         // Создаем dataUrl сцены
         if(format === FORMAT_LIST.DATA_URL){
             images.push({
-                image: sceneCanvas.toDataURL("image/jpeg", jpegComp),
+                image: outputCanvas.toDataURL("image/jpeg", jpegComp),
                 textMetrics
             });
         }

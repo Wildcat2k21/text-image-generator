@@ -1,16 +1,16 @@
 // Компоненты управления темой на странице предпросмотра
 
-import { Component } from "../utils/Component.js";
-import { toggleTheme, themeInit } from "../utils/themeManager.js";
+import { Component } from "@utils/Component.js";
+import { toggleTheme, themeInit } from "@utils/themeManager.js";
  
 export default function PageOptions() {
     return Component({
         html: /*html*/ `
             <div class="page-options">
-                <h3 class="header h3-header">Настройки страницы</h3>
+                <h3 class="header h3-header page-options__header">Настройки страницы</h3>
                 <fieldset class="page-options__fieldset fieldset">
                     <!-- Тема страницы -->
-                    <label class="page-options__theme-label label">
+                    <label class="page-options__label label">
                         Темная тема
                         <input class="page-options__theme-checkbox" type="checkbox" id="dark-theme-checkbox">
                     </label>

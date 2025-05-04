@@ -1,19 +1,29 @@
 import { defineConfig } from "vite";
 import eslintPlugin from "vite-plugin-eslint";
+import path from "path";
 
 export default defineConfig({
     plugins: [eslintPlugin()],
+    resolve: {
+        alias: {
+            "@src": path.resolve(__dirname, "src"),
+            "@components": path.resolve(__dirname, "src/components"),
+            "@helpers": path.resolve(__dirname, "src/helpers"),
+            "@api": path.resolve(__dirname, "src/api"),
+            "@utils": path.resolve(__dirname, "src/utils"),
+            "@constants": path.resolve(__dirname, "src/constants"),
+            "@tests": path.resolve(__dirname, "src/tests"),
+        },
+    },
     server: {
-        port: 3000, // Настраиваем порт сервера
+        port: 3000,
     },
     build: {
-        outDir: "dist", // Куда собирать файлы
+        outDir: "dist",
     },
     test: {
-        // Указываем среду выполнения тестов
         environment: "jsdom",
         setupFiles: "./vitest.setup.js",
-        // Дополнительные настройки, например, globals
         globals: true,
     },
 });

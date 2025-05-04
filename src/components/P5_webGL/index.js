@@ -1,15 +1,15 @@
 // Компонент скетча для рендера рукописного текста на сцену webGL
-import { Component } from "../../utils/Component";
-import { preloadResources } from "../../utils/preloadResources";
+import { Component } from "@utils/Component";
+import { preloadResources } from "@utils/preloadResources";
 import { initSketch } from "./initSketch";
 import { P5renderScene } from "./render";
-import { SCENE_PARENT_ID } from "../../constants/sketch_selectors";
+import { SCENE_PARENT_ID } from "@constants/sketch_selectors";
 
 export default function Scene() {
     return Component({
         html: /*html*/ `
         <div class="p5-context-webgl" id="${SCENE_PARENT_ID}">
-            <h4>Формат фотографии 4:3</h4>
+            <h4 class="header h4-header p5-context-webgl__header">Формат 4:3 просмотра</h4>
         </div>
     `,
         setup: function(){

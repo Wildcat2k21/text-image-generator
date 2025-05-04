@@ -1,8 +1,8 @@
 // Модуль разбивает текст на символы, позволяя генерировать текст со случайными параметрами
-import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "../../constants/P5_sketch_sizes.js";
+import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/P5_sketch_sizes.js";
 import { contextTransform } from "./contextTransform.js";
-import DecartVector from "../../helpers/math/DecartVector.js";
-import { generateParams } from "../../utils/params.js";
+import DecartVector from "@helpers/math/DecartVector.js";
+import { generateParams } from "@utils/params.js";
 
 // Создает объект для рендера текста посимвольно
 // Шрифт и размер должны быть установлены до вызова данный функции в скетче

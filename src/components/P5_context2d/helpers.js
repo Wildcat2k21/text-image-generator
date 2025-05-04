@@ -1,4 +1,4 @@
-import { transformObjectValues } from "../../utils/params";
+import { transformObjectValues } from "@utils/params";
 
 export const transformRelativeParams = (variationParams, transformFunction) => {
     return transformObjectValues(variationParams, {

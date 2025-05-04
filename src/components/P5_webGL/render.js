@@ -29,8 +29,6 @@ export function P5renderScene(){
     // Тетрадь
     const noteModel = models.getCurrent("note");
     const noteTexture = images.getCurrent("noteTexture");
-    const leftList1 = models.getCurrent("left_list1");
-    const rightList1 = models.getCurrent("right_list3");
 
     // Копируем содержимое из внешнего канваса
     textureCanvas.drawingContext.drawImage(sourceCanvas, 0, 0, textureCanvas.width, textureCanvas.height);
@@ -71,8 +69,8 @@ export function P5renderScene(){
     sketch.rotate(note.rotateXY);
     sketch.translate(trNoteX, trNoteY, 4);
     // sketch.scale(note.scale);
-    sketch.specularMaterial(100);
-    sketch.shininess(50);
+    sketch.specularMaterial(0);
+    sketch.shininess(0);
     sketch.texture(noteTexture);
     sketch.model(noteModel);
     sketch.pop();

@@ -1,4 +1,4 @@
-import { getRenderOptions } from "../../../helpers/getOptions";
+import { getRenderOptions } from "@helpers/getOptions";
 
 export function RenderBtnController(btnElement, renderController, startRenderCallback = () =>{}){
     const eventCallback = async ({ target }) => {

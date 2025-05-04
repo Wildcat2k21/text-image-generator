@@ -1,8 +1,12 @@
-import { SheetType } from "../../../P5_context2d/renderList";
-import { fontNames } from "../../../../utils/preloadFonts";
-import { randomArrayElement } from "../../../../helpers/math";
-import { generateRandomText } from "../../../../utils/generateRandomText";
-import { dictonaryRusLower, dictonaryLatLower, dictonaryNumbers } from "../../../../constants/dictonaries";
+import { SheetType } from "@components/P5_context2d/renderList";
+import { fontNames } from "@utils/preloadFonts";
+import { randomArrayElement } from "@helpers/math";
+import { generateRandomText } from "@utils/generateRandomText";
+import { 
+    dictonaryRusLower,
+    dictonaryLatLower,
+    dictonaryNumbers 
+} from "@constants/dictonaries";
 
 // Словарь для генерации текста
 const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;

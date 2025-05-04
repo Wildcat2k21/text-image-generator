@@ -1,5 +1,5 @@
-import { Images, Models } from "../../../../utils/preloadResources";
-import { SheetType } from "../../../P5_context2d/renderList";
+import { Images, Models } from "@utils/preloadResources";
+import { SheetType } from "@components/P5_context2d/renderList";
 
 export const sceneCase4 = () => ({
     camera: {
@@ -51,7 +51,8 @@ export const sceneCase4 = () => ({
         texture: [
             Images.TABLE1,
             Images.TABLE2,
-            Images.TABLE3
+            Images.TABLE3,
+            Images.TABLE4
         ]
     },
     lightning: {

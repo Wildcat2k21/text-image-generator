@@ -1,7 +1,7 @@
 // Данный модуль предназначен для генерации случайного текста, в котором задаётся:
 // длина для символов конечного текста
 // словарь, из которого состоит данный текст
-import { getRandomSign } from "../helpers/dictonaries.js";
+import { getRandomSign } from "@helpers/dictonaries.js";
 
 export function generateRandomText(dictionary, length) {
     let text = "";

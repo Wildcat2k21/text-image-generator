@@ -1,5 +1,3 @@
-// Модуль для рендера листов
-
 // Типы листов
 export const SheetType = {
     GRID: "grid",

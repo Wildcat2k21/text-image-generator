@@ -1,4 +1,4 @@
-import { createRotationMatrix, multiplyMatrices } from "../../helpers/math";
+import { createRotationMatrix, multiplyMatrices } from "@helpers/math";
 
 export function contextTransform({transform, translate, rotate}, translateX, translateY) {
     // Для applyMatrix(a, b, c, d, e, f);

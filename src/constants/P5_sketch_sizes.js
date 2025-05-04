@@ -14,7 +14,7 @@ export const A_FORMAT_HEIGHT = A_FORMAT_WIDTH * A_FORMAT_ASPECT;
 // --------------- context webgl ------------------
 
 // Базовый размер высоты снимка (При вертикальной съемке)
-export const PHONE_CAMERA_WIDTH = 1000;
+export const PHONE_CAMERA_WIDTH = 500;
 
 export const PHOME_CAMERA_ASPECT = 4/3;
 
