@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/P5_sketch_sizes";
+import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/sketchSizes";
 
 export function initSketch () {
     return new p5((sketch) => {

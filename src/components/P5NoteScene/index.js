@@ -3,7 +3,7 @@ import { Component } from "@utils/Component";
 import { preloadResources } from "@utils/preloadResources";
 import { initSketch } from "./initSketch";
 import { P5renderScene } from "./render";
-import { SCENE_PARENT_ID } from "@constants/sketch_selectors";
+import { SCENE_PARENT_ID } from "@constants/sketchSelectors";
 
 export default function Scene() {
     return Component({

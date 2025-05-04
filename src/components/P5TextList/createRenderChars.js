@@ -1,5 +1,5 @@
 // Модуль разбивает текст на символы, позволяя генерировать текст со случайными параметрами
-import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/P5_sketch_sizes.js";
+import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/sketchSizes";
 import { contextTransform } from "./contextTransform.js";
 import DecartVector from "@helpers/math/DecartVector.js";
 import { generateParams } from "@utils/params.js";

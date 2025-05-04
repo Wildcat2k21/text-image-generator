@@ -1,4 +1,4 @@
-import { SheetType } from "@components/P5_context2d/renderList";
+import { SheetType } from "@components/P5TextList/renderList";
 import { fontNames } from "@utils/preloadFonts";
 import { randomArrayElement } from "@helpers/math";
 import { generateRandomText } from "@utils/generateRandomText";

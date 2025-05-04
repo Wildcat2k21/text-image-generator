@@ -1,12 +1,12 @@
 import { Component } from "@utils/Component";
-import { PHONE_CAMERA_WIDTH, PHONE_CAMERA_HEIGHT } from "@constants/P5_sketch_sizes";
+import { PHONE_CAMERA_WIDTH, PHONE_CAMERA_HEIGHT } from "@constants/sketchSizes";
 import { updateFilters } from "./updateFilters";
-import { FILTER_PARENT_ID } from "@constants/sketch_selectors";
+import { FILTER_PARENT_ID } from "@constants/sketchSelectors";
 import * as fx from "glfx-es6";
 
 const DEFAULT_UPDATE_DELAY = 500;
 
-const FiltersPreview = () => {
+const FilterWindow = () => {
     return Component({
         html: /*html*/ `
       <div class="filters-preview" id="${FILTER_PARENT_ID}">
@@ -55,4 +55,4 @@ const FiltersPreview = () => {
     });
 };
 
-export default FiltersPreview;
+export default FilterWindow;

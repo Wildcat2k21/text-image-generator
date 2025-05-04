@@ -1,7 +1,7 @@
 // Компонент скетча с рукописным текстом
 import { preloadFonts } from "@utils/preloadFonts";
 import { Component } from "@utils/Component";
-import { MANUSCRIPT_PARENT_ID } from "@constants/sketch_selectors";
+import { MANUSCRIPT_PARENT_ID } from "@constants/sketchSelectors";
 import { initSketch } from "./initSketch";
 import { P5renderText } from "./render";
 

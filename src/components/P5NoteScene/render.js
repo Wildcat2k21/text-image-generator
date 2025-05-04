@@ -1,4 +1,4 @@
-import { SheetType } from "../P5_context2d/renderList";
+import { SheetType } from "../P5TextList/renderList";
 
 // Рисуем сцену webGL
 export function P5renderScene(){

@@ -4,7 +4,7 @@ import { Component } from "@utils/Component.js";
 import { RenderController } from "./RenderController.js";
 import { RenderBtnController } from "./helpers/renderBtnController.js";
 import { getRenderOptions, getPreviewOptions } from "@helpers/getOptions";
-import { FILTER_PARENT_ID } from "@constants/sketch_selectors.js";
+import { FILTER_PARENT_ID } from "@constants/sketchSelectors.js";
 import {
     progressCallbackFactory,
     handleStopRender,

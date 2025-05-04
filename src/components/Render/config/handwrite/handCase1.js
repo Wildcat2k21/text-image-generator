@@ -1,4 +1,4 @@
-import { SheetType } from "@components/P5_context2d/renderList";
+import { SheetType } from "@components/P5TextList/renderList";
 import { fontNames } from "@utils/preloadFonts";
 import { randomArrayElement } from "@helpers/math";
 import { generateRandomText } from "@utils/generateRandomText";
@@ -11,7 +11,7 @@ import {
 // Словарь для генерации текста
 const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
 
-export const handCase3 = () => ({
+export const handCase1 = () => ({
     char_variation: {
         // Вариация матрицы трансформации для символов
         // Значения в % от ширины скетча
@@ -65,8 +65,8 @@ export const handCase3 = () => ({
         // 3 - bottom
         // 4 - height
         transform: {
-            start: 15,
-            end: 10,
+            start: 10,
+            end: 15,
             top: 10,
             bottom: 10,
             height: 5
@@ -90,7 +90,7 @@ export const handCase3 = () => ({
         // Параметры линий полей листа
         borderLine: {
             pad: 12.12,
-            onLeft: true,
+            onLeft: false,
             color: "#C22929",
         },
     },

@@ -1,9 +1,11 @@
 import p5 from "p5";
+
 import { 
     PHONE_CAMERA_WIDTH,
     PHONE_CAMERA_HEIGHT,
-} from "@constants/P5_sketch_sizes";
-import { MANUSCRIPT_PARENT_ID } from "@constants/sketch_selectors";
+} from "@constants/sketchSizes";
+
+import { MANUSCRIPT_PARENT_ID } from "@constants/sketchSelectors";
 
 export function initSketch (renderOptions, renderFunction, orbitControl) {
     return new p5((sketch) => {

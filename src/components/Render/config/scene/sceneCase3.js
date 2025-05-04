@@ -1,36 +1,36 @@
 import { Images, Models } from "@utils/preloadResources";
-import { SheetType } from "@components/P5_context2d/renderList";
+import { SheetType } from "@components/P5TextList/renderList";
 
-export const sceneCase1 = () => ({
+export const sceneCase3 = () => ({
     camera: {
         //no change
         lookAt: {
             from: [0, 0, 0.1],
             to: [0, 0, 0.1]
         },
-        targetList: 1, //0 - left, 1 - right
+        targetList: 0, //0 - left, 1 - right
         //180 min 300 max
         position: {
             from: [0, 0, 180],
-            to: [0, 0, 180]
+            to: [0, 0, 300]
         },
         //max mod Math.PI/5
         rotate: {
-            from: [-Math.PI/200, -Math.PI/200, -Math.PI/200],
-            to: [Math.PI/200, Math.PI/200, Math.PI/200]
+            from: [-Math.PI/20, -Math.PI/20, -Math.PI/20],
+            to: [Math.PI/20, Math.PI/20, Math.PI/20]
         }
     },
     note: {
         // scale: 1,
         //max mod 3
         translateXY: {
-            from: [-0, -0],
-            to: [0, 0]
+            from: [-3, -3],
+            to: [3, 3]
         },
         //max mod Math.PI/10
         rotateXY: {
-            from: -Math.PI/200,
-            to: Math.PI/200
+            from: -Math.PI/30,
+            to: Math.PI/30
         },
         lists: {
             leftModelName: [
@@ -45,7 +45,7 @@ export const sceneCase1 = () => ({
             ]
         },
         listTypes: SheetType.GRID, 
-        renderTextOnList: 1 //0 - left, 1 - right
+        renderTextOnList: 0 //0 - left, 1 - right
     },
     table: {
         texture: [

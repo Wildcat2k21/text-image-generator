@@ -3,7 +3,7 @@ import {
     SCENE_PARENT_ID,
     MANUSCRIPT_PARENT_ID,
     FILTER_PARENT_ID
-} from "@constants/sketch_selectors";
+} from "@constants/sketchSelectors";
 
 import { generateImages, FORMAT_LIST } from "./helpers/generateImages";
 import { pausablePromise } from "@utils/pausablePromise";
