@@ -1,7 +1,7 @@
 // Тестирование модуля загрузки шрифтов для p5
 
 import { describe, it, expect } from "vitest";
-import preloadFonts from "../helpers/PreloadFonts";
+import { preloadFonts } from "../helpers/preloadFonts";
 
 describe("PreloadFonts", () => {
     it("должен успешно загрузить все шрифты", async () => {

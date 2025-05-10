@@ -1,4 +1,4 @@
-import { randBetween, randomArrayElement } from "../helpers/math";
+import { randBetween, randomArrayElement } from "@helpers/math";
 
 /**
  * Генерирует параметры на основе переданного объекта вариации.

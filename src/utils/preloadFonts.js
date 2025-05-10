@@ -28,7 +28,7 @@ export async function preloadFonts() {
     if (fontManager) return fontManager;
 
     return new Promise((resolve, reject) => {
-        const tmpSketch = (sketch) => {
+        new p5((sketch) => {
             sketch.setup = () => {
                 const fonts = {};
                 let loadedCount = 0;
@@ -39,8 +39,6 @@ export async function preloadFonts() {
                         loadedCount++;
 
                         if (loadedCount === fontNames.length) {
-                            sketch.remove();
-
                             fontManager = {
                                 getCurrent: (name) => fonts[name] || null,
                                 getAll: () => ({ ...fonts }),
@@ -53,9 +51,10 @@ export async function preloadFonts() {
                         reject(new Error(`Ошибка загрузки шрифта: ${fontPaths[name]}. Текст ошибки: ${err}`));
                     });
                 });
-            };
-        };
 
-        new p5(tmpSketch, document.createElement("div"));
+                // Удаляем временный скетч
+                sketch.remove();
+            };
+        });        
     });
 }
