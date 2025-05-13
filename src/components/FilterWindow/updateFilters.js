@@ -1,7 +1,7 @@
-import { standart } from "@components/Render/config/filters/standart";
+import { filterCase1 } from "@components/Render/config/filters/filterCase1";
 import { SCENE_PARENT_ID } from "@constants/sketchSelectors";
 
-export function updateFilters(filters = standart()){ // Стандартный фильтр по умолчанию
+export function updateFilters(filters = filterCase1()){ // Стандартный фильтр по умолчанию
     const p5Wrapper = document.querySelector(`#${SCENE_PARENT_ID}`);
     if (!p5Wrapper || !p5Wrapper._p5Instance) return;
 

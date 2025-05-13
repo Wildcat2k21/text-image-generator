@@ -2,7 +2,7 @@ import { dataset } from "@api/index.js";
 import { getRenderOptions } from "@helpers/getOptions";
 import { generateParams } from "@utils/params";
 import { randomArrayElement } from "@helpers/math";
-import { cases } from "../config/index";
+import { renderConfig } from "../config/index";
 
 export const handleStopRender = ($preventRenderBtn, $renderBtn, renderController) => {
     $preventRenderBtn.addEventListener("click", () => {
@@ -19,6 +19,10 @@ export const handleStopRender = ($preventRenderBtn, $renderBtn, renderController
 export function progressCallbackFactory(){
     return async (imageDataChunk, currentStep, totalSteps) => {
         const percent = (currentStep / totalSteps) * 100;
+
+        //для headlress браузера
+        window.renderParcent = percent;
+
         this.querySelector(".progress-bar__percent").textContent = `${percent.toFixed(2)}%`;
         this.querySelector(".progress-bar__fill").style.width = `${percent}%`;
     
@@ -33,25 +37,22 @@ export function progressCallbackFactory(){
     };
 };
 
-export const getFilterParams = (caseGroup) => {
-    const randFulterSubCase = randomArrayElement(caseGroup.filters);
-    const randomFilterCase = randFulterSubCase();
+export const getFilterParams = (filterSubcaseFunction) => {
+    const randomFilterCase = filterSubcaseFunction();
 
     // Вызыварем рендер со случайными кейсом параметров фильтров
     return generateParams(randomFilterCase);
 };
 
-export const getSceneParams = (caseGroup) => {
-    const randSceneSubCase = randomArrayElement(caseGroup.scene);
-    const randomSceneCase = randSceneSubCase();
+export const getSceneParams = (sceneSubcaseFunction) => {
+    const randomSceneCase = sceneSubcaseFunction();
 
     // Вызыварем рендер со случайными кейсом параметров сцены
     return generateParams(randomSceneCase);
 };
 
-export const getHandCaseParamsRaw = (caseGroup) => {
-    const randHandSubCase = randomArrayElement(caseGroup.handwrite);
-    return randHandSubCase();
+export const getHandCaseParamsRaw = (handwriteSubcaseFunction) => {
+    return handwriteSubcaseFunction();
 };
 
 export const orbitControlHandler = ($orbitCheckbox, renderController, filterController) => {
@@ -64,8 +65,8 @@ export const orbitControlHandler = ($orbitCheckbox, renderController, filterCont
 
         // Превью случайного фильтра c автообновлением
         if(target.checked){
-            const randCase = randomArrayElement(cases.list);
-            const filterParams = getFilterParams(randCase);
+            const randCase = randomArrayElement(renderConfig.groups)();
+            const filterParams = getFilterParams(randCase.filters);
             filterController.startLoop(undefined, filterParams);
         }
         else{

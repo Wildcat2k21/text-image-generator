@@ -3,15 +3,16 @@ import { A_FORMAT_WIDTH, A_FORMAT_HEIGHT } from "@constants/sketchSizes";
 import { contextTransform } from "./contextTransform.js";
 import DecartVector from "@helpers/math/DecartVector.js";
 import { generateParams } from "@utils/params.js";
+import { roundRenderLinesOptions, roundRenderCharsOptions } from "@helpers/propareRenderData.js";
 
 // Создает объект для рендера текста посимвольно
 // Шрифт и размер должны быть установлены до вызова данный функции в скетче
-export function createRenderChars(text, char_variation, line_variation){
+export function createRenderChars(content, {charVariation, lineVariation}){
     const p5 = this;
 
     // Получаем случайные величины из диапозона параметров линий и символов
-    let lineParams = generateParams(line_variation);
-    let charParams = generateParams(char_variation);
+    let lineParams = generateParams(lineVariation);
+    let charParams = generateParams(charVariation);
 
     let lineTransform = lineParams.transform;
 
@@ -68,7 +69,13 @@ export function createRenderChars(text, char_variation, line_variation){
     // Объект для хранения метрик строк
     const linesRenderArray = [];
 
-    for(let char of text.split("")){
+    // Разбиваем текст на символы
+    const textCharsArray = content.split("");
+
+    for(let i = 0; i < textCharsArray.length; i++){
+        // Текущий символ
+        const char = textCharsArray[i];
+
         // Композиция вектора линии и вектора строки
         const lineH_lineText_compos = lineHeightVector.add(lineTextVector.matrix());
 
@@ -84,7 +91,7 @@ export function createRenderChars(text, char_variation, line_variation){
         }
         
         // Обновляем преобразование символов
-        charParams = generateParams(char_variation);
+        charParams = generateParams(charVariation);
 
         // Добавляем значение наклона строки к наклону символа
         charParams.rotate -= lineRotate;
@@ -122,6 +129,12 @@ export function createRenderChars(text, char_variation, line_variation){
             lineTextVector.scaleModBy(charWidth);
         }
         else {
+            // Дублируем потерянный при переносе строки символ
+            if(charIsReachTheLineEnd()){
+                const lostChar = textCharsArray[i];
+                textCharsArray.splice(i + 1, 0, lostChar);
+            }
+
             // Сохраняем метрики строки
             linesRenderArray.push({
                 rotated: lineRotate,
@@ -133,7 +146,7 @@ export function createRenderChars(text, char_variation, line_variation){
             lineTextVector.scaleModTo(lineStart);
 
             // Получаем случайные величины из диапозона параметров линий и символа
-            lineParams = generateParams(line_variation);
+            lineParams = generateParams(lineVariation);
             lineTransform = lineParams.transform;
 
             // Получаем случайные параметры линий
@@ -151,7 +164,10 @@ export function createRenderChars(text, char_variation, line_variation){
         }
     }
 
+    // Округляем значения
+    const roundedCharsData = roundRenderCharsOptions(charsRenderArray);
+    const roundedLinesData = roundRenderLinesOptions(linesRenderArray);
+
     // Возвращаем массив рендера символов
-    return [charsRenderArray, linesRenderArray];
+    return [roundedCharsData, roundedLinesData];
 }
-  

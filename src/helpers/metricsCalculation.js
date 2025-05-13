@@ -1,5 +1,6 @@
 // Модуль для расчета метрик рендуриемого текста в скетче Manuscript
 import {  amplifyAngle, parcentOf } from "./math";
+import fontsOptions from "@src/components/Render/config/fonstOptions.json";
 
 // Получение точной высоты символа через canvas API
 const getCharH = (p5, char) => {
@@ -12,14 +13,14 @@ const getCharH = (p5, char) => {
 };
 
 // Функция для расчета метрик линий
-export function linesRenderMetrics(metrics, consoleTableLog = false) {
+export function linesRenderMetrics(metrics) {
     const p5 = this;
 
     // Обсолютные метрики не требует преобразования в % от ширины скетча
     // Относительные метрики задаются в px и требуют преобразования
 
     // Обсолютные метрики
-    // 1. b - Среднее направоение поворота
+    // 1. b - Среднее направление поворота
     // 2. c - Степень поворота
 
     // Относительные метрики
@@ -33,11 +34,11 @@ export function linesRenderMetrics(metrics, consoleTableLog = false) {
     metrics.forEach(metric => {
         const { height, rotated, width } = metric;
     
-        // a - Среднее направоение поворота
+        // a - Среднее направление поворота
         line_metrics[0] += rotated;
        
         // b - Степень поворота
-        line_metrics[1] += amplifyAngle(rotated, 64);
+        line_metrics[1] += amplifyAngle(rotated, 10);
 
         // --- Относительные метрики ---
 
@@ -49,25 +50,22 @@ export function linesRenderMetrics(metrics, consoleTableLog = false) {
     });
 
     // Высчитываем среднее значение обсолютных метрик
-    const absolute_metrics_av = line_metrics.map((val) => val / metrics.length);;
+    const absolute_metrics_av = line_metrics.map((val) => val / metrics.length);
+
+    // Усиление угла с направление поворота
+    absolute_metrics_av[1] *= Math.sign(absolute_metrics_av[0]);
+    absolute_metrics_av.splice(0, 1);
     
     // Преобразуем относительые метрики величину в % от ширины скетча и считаем среднее
     const relative_metrics_av = line_relative_metrics
         .map((val) => parcentOf(val / metrics.length, p5.width));
 
     // Объединяем обсолютные и относительные метрики
-    const allMetrics = [...relative_metrics_av, ...absolute_metrics_av, ];
-
-    if (consoleTableLog) {
-        // Выводим метрики
-        logLineMetrics(allMetrics);
-    }
-
-    return allMetrics;
+    return [...relative_metrics_av, ...absolute_metrics_av, ];;
 }
 
 // Функция для расчета метрик символов
-export function charsRenderMetrics(charsRenderArray, consoleTableLog = false){
+export function charsRenderMetrics(charsRenderArray, fontName){
     const p5 = this;
 
     // Обсолютные метрики не требует преобразования в % от ширины скетча
@@ -84,7 +82,7 @@ export function charsRenderMetrics(charsRenderArray, consoleTableLog = false){
     // 2. b - Средняя высота символов в тексте
     // 3. c - Смещение символов по x
     // 4. d - Смещение символов по y
-    const char_metrics = [0, 0, 0, 0];
+    const char_metrics = [0]; //[0, 0, 0, 0]
     const char_relative_metrics = [0, 0, 0, 0];
 
     // Считаем метрики символов, которые уже переданы
@@ -92,22 +90,22 @@ export function charsRenderMetrics(charsRenderArray, consoleTableLog = false){
         const { 
             char,
             transform,
-            rotated,
+            // rotated,
             shifted_baseline_offset_x,
             shifted_baseline_offset_y,
         } = metric;
 
         // a - наклон символов по x по модулю
-        char_metrics[0] += Math.abs(transform[2]);
+        char_metrics[0] += transform[2];
 
         // b - наклон символов по y по модулю
-        char_metrics[1] += Math.abs(transform[1]);
+        // char_metrics[1] += Math.abs(transform[1]);
 
-        // c - направление поворота символов
-        char_metrics[2] += rotated;
+        // // c - направление поворота символов
+        // char_metrics[2] += rotated;
 
-        // d - степень поворота (от 0 до 1 макс)
-        char_metrics[3] += amplifyAngle(rotated, 1.25);
+        // // d - степень поворота (от 0 до 1 макс)
+        // char_metrics[3] += amplifyAngle(rotated, 1.25);
 
         // --- Относительные метрики ---
 
@@ -124,53 +122,51 @@ export function charsRenderMetrics(charsRenderArray, consoleTableLog = false){
         char_relative_metrics[3] += Math.abs(shifted_baseline_offset_y);
     });
 
+    // Получаем параметры наклона шрифта
+    const fontSkewX = fontsOptions[fontName].skewY;
+
     // Высчитываем среднее значение обсолютных метрик
     const absolute_metrics_av = char_metrics
         .map(val => val / charsRenderArray.length);
+
+    // Исправление метрики наклона шрифта
+    absolute_metrics_av[0] += fontSkewX;
 
     // Преобразуем относительые метрики величину в % от ширины скетча и считаем среднее
     const relative_metrics_av = char_relative_metrics
         .map(val => parcentOf(val / charsRenderArray.length, p5.width));
 
-
-    // Объединяем метрики
-    const allMetrics = [...relative_metrics_av, ...absolute_metrics_av];
-
-    if (consoleTableLog) {
-        // Вывод метрик символов
-        logCharMetrics(allMetrics);
-    }
-
     // Объединяем метрики в один массив
-    return allMetrics;
+    return [...relative_metrics_av, ...absolute_metrics_av];;
 };
 
-// Вывод метрик символов
-const logCharMetrics = (averageCharMetrics) => {
+// Предпросмотр метрик в консоли
+export const logMetrics = ({averageCharMetrics, averageLineMetrics, fontCatOutput}) => {
     const charMetricsTable = [
-        { name: "char_w", value: averageCharMetrics[0] },
-        { name: "char_h", value: averageCharMetrics[1] },
-        { name: "char_shift_x", value: averageCharMetrics[2] },
-        { name: "char_shift_y", value: averageCharMetrics[3] },
+        { name: "char-width", value: averageCharMetrics[0] },
+        { name: "char-height", value: averageCharMetrics[1] },
+        { name: "char-offset-x", value: averageCharMetrics[2] },
+        { name: "char-offset-y", value: averageCharMetrics[3] },
         { name: "char_skew_x", value: averageCharMetrics[4] },
-        { name: "char_skew_y", value: averageCharMetrics[5] },
-        { name: "char_rotated", value: averageCharMetrics[6] },
-        { name: "char_rotate_power", value: averageCharMetrics[7] },
+        // { name: "char_skew_y", value: averageCharMetrics[5] },
+        // { name: "char_rotated", value: averageCharMetrics[6] },
+        // { name: "char_rotate_power", value: averageCharMetrics[7] },
     ];
 
-    // eslint-disable-next-line no-console
-    console.table(charMetricsTable);
-};
-
-// Вывод метрик линий
-const logLineMetrics = (averageLineMetrics) => {
     const lineMetricsTable = [
-        { name: "line_w", value: averageLineMetrics[0] },
-        { name: "line_h", value: averageLineMetrics[1] },
-        { name: "line_rotated", value: averageLineMetrics[2] },
-        { name: "line_rotated_power", value: averageLineMetrics[3] },
+        { name: "line-width", value: averageLineMetrics[0] },
+        { name: "line-height", value: averageLineMetrics[1] },
+        { name: "line-rotated-power", value: averageLineMetrics[2] },
+        { name: "font-output", value: fontCatOutput }
     ];
 
     // eslint-disable-next-line no-console
-    console.table(lineMetricsTable);
+    console.log("Метрики символов:");
+    // eslint-disable-next-line no-console
+    console.table(charMetricsTable.concat(lineMetricsTable));
+
+    // // eslint-disable-next-line no-console
+    // console.log("Метрики строк:");
+    // // eslint-disable-next-line no-console
+    // console.table(lineMetricsTable);
 };

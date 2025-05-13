@@ -46,10 +46,12 @@ export function RenderController(processCallback) {
         // Считаем количество итераций в зависимости от количества изображений
         const IMAGES_PER_REQUEST = renderOptions.amount > MAX_IMAGES_PER_REQUEST
             ? MAX_IMAGES_PER_REQUEST : renderOptions.amount;
-
+            
         for(let i = 0; i < renderOptions.amount; i += IMAGES_PER_REQUEST){
             // Прерывание рендера
             if(!this.renderIsStarted) return false;
+
+            window.renderCount = i;
 
             // Отбработка паузы (Если будет вызван метод pauseRender)
             await this.pauseRenderPromise.waitIfPaused();
@@ -63,6 +65,8 @@ export function RenderController(processCallback) {
             // Вызываем callback для передачи промежуточного процесса
             await processCallback(images, i, renderOptions.amount);
         }
+
+        window.renderCount = renderOptions.amount;
 
         // Выполнено
         processCallback([], renderOptions.amount, renderOptions.amount);

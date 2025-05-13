@@ -7,11 +7,13 @@
   --discent-color: rgba(0, 0, 0, 0.33);
 
   /* text canvas */
-  --text-canvas-width: 90%;
+  --text-canvas-width: 300px;
+  /* --text-canvas-width: 400px; */
   --text-canvas-height: calc(var(text-canvas-width) * 20.5/16.5); /*формат листа foolio/2*/
 
   /* webgl canvas */
-  --webgl-canvas-width: 90%;
+  --webgl-canvas-width: 300px;
+  /* --webgl-canvas-width: 400px; */
   --webgl-canvas-height: calc(var(--webgl-canvas-width) * 4/3); 
 }
 

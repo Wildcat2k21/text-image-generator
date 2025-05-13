@@ -1,4 +1,5 @@
 export const filterCase1 = () => ({
+    title: "filter1",
     // zoomBlur: 0.0125,
     unsharpMask: {
         arg1: 1.5,
@@ -8,6 +9,12 @@ export const filterCase1 = () => ({
         arg1: 0.1,
         arg2: 0.3
     },
-    triangleBlur: 0.5,
-    noise: 0.0625
+    triangleBlur: {
+        from: 0,
+        to: 0.5
+    },
+    noise: {
+        from: 0,
+        to: 0.025
+    }
 });

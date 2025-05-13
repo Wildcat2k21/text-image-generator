@@ -100,6 +100,30 @@ export default function RenderOptions() {
             // Получаем кнопку остановки рендера
             const $preventRenderBtn = this.querySelector("#prevent-render-btn");
             handleStopRender($preventRenderBtn, $renderBtn, renderController);
+
+            // === Глобальные функции управления рендером ===
+
+            window.startRender = () => {
+                if(!renderController.renderIsStarted){
+                    $renderBtn.click();
+                };
+            };
+
+            window.pauseRender = () => {
+                if(renderController.renderIsStarted){
+                    $renderBtn.click();
+                };
+            };
+
+            window.stopRender = () => {
+                if(renderController.renderIsStarted){
+                    $preventRenderBtn.click();
+                };
+            };
+
+            window.setRenderAmount = (amount) => {
+                window.renderAmount = amount;
+            };
         }
     });
 }

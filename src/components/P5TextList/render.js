@@ -1,8 +1,11 @@
-import { createRenderChars } from "./createRenderChars.js";
-import { charsRenderMetrics, linesRenderMetrics } from "@helpers/metricsCalculation.js";
-import { renderList } from "./renderList.js";
-import { randBetween, relativeToInParcent } from "@helpers/math/index.js";
+import { createRenderChars } from "./createRenderChars";
+import { charsRenderMetrics, linesRenderMetrics, logMetrics } from "@helpers/metricsCalculation";
+import { renderList } from "./renderList";
+import { relativeToInParcent } from "@helpers/math";
 import { transformRelativeParams } from "./helpers";
+// import { roundAndScaleMetrics } from "@helpers/propareRenderData";
+import { generateParams } from "@utils/params";
+import { fontNames } from "@utils/preloadFonts";
 
 export function P5renderText(textRenderConfig) {
     const p5 = this._p5Instance;
@@ -12,42 +15,71 @@ export function P5renderText(textRenderConfig) {
     const transformedParams = transformRelativeParams(textRenderConfig, applyRelativeScaling);
 
     const {
-        font,
-        fontSize,
-        textColor,
-        renderText,
-        char_variation,
-        line_variation,
-        renderListConfig,
+        renderProps,
+        listProps,
+        textProps
     } = transformedParams;
 
+    const {
+        fontSize,
+        fontName,
+        color: textColor,
+        content,
+    } = generateParams(textProps);
+
+    // Получаем шрифт
+    const font = this._p5Fonts.getCurrent(fontName);
+
     // Настройка текста
-    p5.textSize(randBetween(Object.values(fontSize)));
+    p5.textSize(fontSize);
     p5.textFont(font);
 
     // Рендер листа
-    renderList.call(p5, renderListConfig);
+    renderList.call(p5, generateParams(listProps));
+
+    // Применяем размытие
+    if(listProps.blur > 0){
+        p5.filter(p5.BLUR, listProps.blur);
+    }
 
     // Подготовка символов к рендеру
-    const [renderChars, renderLines] = createRenderChars.call(p5, renderText, char_variation, line_variation);
+    const [renderChars, renderLines] = createRenderChars.call(p5, content, renderProps);
 
     // Метрики
-    const averageCharMetrics = charsRenderMetrics.call(p5, renderChars, false); //returns averageCharMetrics
-    const averageLineMetrics = linesRenderMetrics.call(p5, renderLines, false); //returns averageLineMetrics
+    const averageCharMetrics = charsRenderMetrics.call(p5, renderChars, fontName);
+    const averageLineMetrics = linesRenderMetrics.call(p5, renderLines);
+
+    const metricsData = {
+        averageCharMetrics: averageCharMetrics.map(val => parseFloat(val.toFixed(3))),
+        averageLineMetrics: averageLineMetrics.map(val => parseFloat(val.toFixed(3))),
+        fontCatOutput: fontNames.map((name) => name === fontName ? 1 : 0)
+    };
+
+    // Округление и масштабирование
+    // const roundedAndScaledMetrics = roundAndScaleMetrics(metricsData);
+
+    // Консольный вывод метрик
+    // logMetrics(metricsData);
+     
+    // console.log("=========== обработанные =========");
+    // logMetrics(roundedAndScaledMetrics);
 
     // Метод для получения метрик текста из родителя
-    this.getTextMetrics = () => ({averageCharMetrics, averageLineMetrics});
+    this.getTextMetrics = () => metricsData;
 
     // Цвет текста
-    p5.fill(textColor);
+    p5.fill(...textColor);
 
     // Рендер символов
     for (const { char, transform } of renderChars) {
         p5.push();
         p5.applyMatrix(...transform);
         p5.text(char, 0, 0);
-        // p5.applyMatrix(...transform.slice(0, 4), p5.width/2 , p5.height/2);
-        // p5.text(char, -p5.textWidth(char)/2, -p5.textAscent()/2 + 11);
         p5.pop();
+    }
+
+    // Применяем размытие текста
+    if(textProps.blur > 0){
+        p5.filter(p5.BLUR, textProps.blur);
     }
 }

@@ -23,8 +23,7 @@ export default function Manuscript() {
 
             this.renderText = function renderText(variationParams){
                 // Используем установленные шрифты "Родителя"
-                const paramsWithFont = {...variationParams, font: this._p5Fonts.getCurrent(variationParams.fontName)};
-                this._p5Instance.draw = () => P5renderText.call(this, paramsWithFont);
+                this._p5Instance.draw = () => P5renderText.call(this, variationParams);
 
                 // Перерисовыем скетч
                 this._p5Instance.redraw();

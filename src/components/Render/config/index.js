@@ -1,61 +1,61 @@
+import {
+    useHandcaseListOptions,
+    randomListType,
+    randLeftSideRender,
+    applyHandcaseParams,
+    applySceneParams,
+} from "./other";
+
+import { randomArrayElement } from "@helpers/math";
+
 // Группа конфигов подчерка
 import { handCase1 } from "./handwrite/handCase1";
 import { handCase2 } from "./handwrite/handCase2";
-import { handCase3 } from "./handwrite/handCase3";
-import { handCase4 } from "./handwrite/handCase4";
 
-// Группа конфигов сцены
+// Группа конфигов сцены (Нормальная фотография)
 import { sceneCase1 } from "./scene/sceneCase1";
-import { sceneCase2 } from "./scene/sceneCase2";
-import { sceneCase3 } from "./scene/sceneCase3";
-import { sceneCase4 } from "./scene/sceneCase4";
 
 // Фильтры
 import { filterCase1 } from "./filters/filterCase1";
 
-export const cases = {
-    list: [{
-        handwrite: [
-            handCase1,
-        ],
-        scene: [
-            sceneCase1
-        ],
-        filters: [
-            filterCase1
-        ]
-    // },
-    // {
-    //     handwrite: [
-    //         handCase2,
-    //     ],
-    //     scene: [
-    //         sceneCase2
-    //     ],
-    //     filters: [
-    //         filterCase1
-    //     ]
-    // },
-    // {
-    //     handwrite: [
-    //         handCase3,
-    //     ],
-    //     scene: [
-    //         sceneCase3
-    //     ],
-    //     filters: [
-    //         filterCase1
-    //     ]
-    // },
-    // {
-    //     handwrite: [
-    //         handCase4,
-    //     ],
-    //     scene: [
-    //         sceneCase4
-    //     ],
-    //     filters: [
-    //         filterCase1
-    //     ]
-    }]
+const rightFuncRepeat = function(){
+    const renderListType = randomListType();
+    const renderLeft = randLeftSideRender();
+
+    // Получаем параметры листа
+    const renderParamsRange = useHandcaseListOptions(renderListType, renderLeft);
+
+    return {
+        outputs: [1, 0, 0, 0, 0, 0],
+        handwrite: () => {
+            const handcaseParams = randomArrayElement([
+                handCase1(),
+                handCase2(),
+                handCase2()
+            ]);
+
+            return applyHandcaseParams(handcaseParams, renderParamsRange.handcase);
+        },
+        scene: () => {
+            const sceneParams = randomArrayElement([
+                sceneCase1(),
+            ]);
+
+            return applySceneParams(sceneParams, renderParamsRange.scene);;
+        },
+        filters: () => {
+            const filterParams = randomArrayElement([
+                filterCase1()
+            ]);
+
+            return filterParams;
+        }
+    };
+};
+
+export const renderConfig = {
+    // Нормальный фотографии
+    groups: [
+        rightFuncRepeat,
+    ]
 };

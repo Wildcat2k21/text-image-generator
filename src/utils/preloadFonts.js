@@ -5,7 +5,7 @@ const fontPaths = {
     anselmo: "/fonts/Anselmo.ttf",
     benvolio: "/fonts/Benvolio.ttf",
     capuletty: "/fonts/Capuletty.ttf",
-    djiovanni: "/fonts/Djiovanni.ttf",
+    // djiovanni: "/fonts/Djiovanni.ttf", Не поддерживает латиницу
     eskal: "/fonts/Eskal.ttf",
     gregory: "/fonts/Gregory.ttf",
     lexa: "/fonts/Lexa.ttf",
@@ -15,9 +15,9 @@ const fontPaths = {
     pag: "/fonts/Pag.ttf",
     paris: "/fonts/Paris.ttf",
     salavat: "/fonts/Salavat.ttf",
-    samson: "/fonts/Samson.ttf",
+    // samson: "/fonts/Samson.ttf", Не поддерживает латиницу
     shriftone: "/fonts/shriftone.ttf",
-    stefano: "/fonts/Stefano.ttf"
+    // stefano: "/fonts/Stefano.ttf"
 };
 
 export const fontNames = Object.keys(fontPaths);

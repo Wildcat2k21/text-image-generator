@@ -2,22 +2,24 @@ import { transformObjectValues } from "@utils/params";
 
 export const transformRelativeParams = (variationParams, transformFunction) => {
     return transformObjectValues(variationParams, {
-        char_variation: {
-            translate: {
-                shiftX: true,
-                shiftY: true
+        renderProps: {
+            charVariation: {
+                translate: {
+                    shiftX: true,
+                    shiftY: true
+                }
+            },
+            lineVariation: {
+                transform: {
+                    start: true,
+                    end: true,
+                    top: true,
+                    bottom: true,
+                    height: true
+                }
             }
         },
-        line_variation: {
-            transform: {
-                start: true,
-                end: true,
-                top: true,
-                bottom: true,
-                height: true
-            }
-        },
-        renderListConfig: {
+        listProps: {
             linesOptions: {
                 size: true,
                 strokeWeight: true
@@ -26,9 +28,11 @@ export const transformRelativeParams = (variationParams, transformFunction) => {
                 pad: true
             }
         },
-        fontSize: {
-            from: true,
-            to: true
+        textProps: {
+            fontSize: {
+                from: true,
+                to: true
+            }
         }
     }, transformFunction);
 };

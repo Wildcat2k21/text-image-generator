@@ -1,5 +1,4 @@
-import { generateParams } from "@utils/params";
-import { cases } from "../config/index";
+import { renderConfig } from "../config/index";
 import { randomArrayElement } from "@helpers/math";
 import { 
     getFilterParams,
@@ -33,14 +32,15 @@ export async function generateImages(
     const images = [];
 
     for(let i = 0; i < amount; i++){
-        const randomGroup = randomArrayElement(cases.list);
-        const randomHandwriteCase = getHandCaseParamsRaw(randomGroup);
-        const sceneParams = getSceneParams(randomGroup);
-        const filterParams = getFilterParams(randomGroup);
+        const randomGroup = randomArrayElement(renderConfig.groups)();
+        const randomHandwriteCase = getHandCaseParamsRaw(randomGroup.handwrite);
+        const sceneParams = getSceneParams(randomGroup.scene);
+        const filterParams = getFilterParams(randomGroup.filters);
 
         // Вызыварем рендер со случайными кейсом параметров листа
         listSource.renderText(randomHandwriteCase);
-        const textMetrics = randomHandwriteCase.renderText;//Метод для получения метрик текста - listSource.getTextMetrics();
+        const textMetrics = listSource.getTextMetrics();
+        //listSource.getTextMetrics();//Метод для получения метрик текста - listSource.getTextMetrics();
 
         // Также возвращает ссылку на Canvas сцены
         sceneSource.renderScene(sceneParams, previewMode);
@@ -51,12 +51,13 @@ export async function generateImages(
 
         const outputCanvas = filterController.canvas;
 
+        // console.log(0.85); //выводит 10
         // Создаем blob сцены webGL
         if(format === FORMAT_LIST.BLOB){
             const imageBlob = await new Promise((resolve) => {
                 outputCanvas.toBlob((blob) => {
                     resolve(blob);
-                }, "image/jpeg", jpegComp);
+                }, "image/jpeg", 0.85);
             });
 
             images.push({image: imageBlob, textMetrics});

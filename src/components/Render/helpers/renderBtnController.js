@@ -11,7 +11,7 @@ export function RenderBtnController(btnElement, renderController, startRenderCal
             if(!renderController.renderIsStarted){
                 startRenderCallback(renderOptions);
                 renderController.startRender(renderOptions).then(() => {
-                    confirm("Рендер был завершен ℹ️");
+                    // confirm("Рендер был завершен ℹ️");
                     target.textContent = "Создать датасет";
                     target.style.backgroundColor = "#98e674";
                     target.pauseFlag = false;

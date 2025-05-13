@@ -1,4 +1,5 @@
 import { SheetType } from "../P5TextList/renderList";
+import { SecondListTextures, getBlurredList } from "./blurSeondList";
 
 // Рисуем сцену webGL
 export function P5renderScene(){
@@ -20,11 +21,11 @@ export function P5renderScene(){
     const tableTexture = images.getCurrent(table.texture);
     const skyboxTexture = images.getCurrent("skybox");
 
-    // Заглушки для листов
-    const leftListLines = images.getCurrent("leftListLines");
-    const rightListLines = images.getCurrent("rightListLines");
-    const leftListGrid = images.getCurrent("leftListGrid");
-    const rightListGrid = images.getCurrent("rightListGrid");
+    // // Заглушки для листов
+    // const leftListLines = images.getCurrent("leftListLines");
+    // const rightListLines = images.getCurrent("rightListLines");
+    // const leftListGrid = images.getCurrent("leftListGrid");
+    // const rightListGrid = images.getCurrent("rightListGrid");
 
     // Тетрадь
     const noteModel = models.getCurrent("note");
@@ -54,8 +55,8 @@ export function P5renderScene(){
     sketch.push();
     sketch.translate(0, 0, 0);
     sketch.texture(tableTexture);
-    sketch.specularMaterial(250);
-    sketch.shininess(50);
+    sketch.specularMaterial(0);
+    sketch.shininess(0);
     sketch.plane(400, 400);
     sketch.pop();
 
@@ -75,13 +76,31 @@ export function P5renderScene(){
     sketch.model(noteModel);
     sketch.pop();
 
-    // Выбираем отображение левого листа
-    const displayLeftList = !   note.renderTextOnList 
-        ? textureCanvas : (note.listTypes === SheetType.LINES ? leftListLines: leftListGrid);
+    // // Выбираем отображение левого листа
+    // const displayLeftList = !note.renderTextOnList 
+    //     ? textureCanvas : (note.sheetType === SheetType.LINES ? leftListLines: leftListGrid);
 
-    // Выбираем отображение правого листа
-    const displayRightList = note.renderTextOnList 
-        ? textureCanvas : (note.listTypes === SheetType.LINES ? rightListLines: rightListGrid);
+    // // Выбираем отображение правого листа
+    // const displayRightList = note.renderTextOnList 
+    //     ? textureCanvas : (note.sheetType === SheetType.LINES ? rightListLines: rightListGrid);
+    
+    const displayLeftList = !note.renderTextOnList
+        ? textureCanvas
+        : getBlurredList(sketch, images,
+            note.sheetType === SheetType.LINES 
+                ? SecondListTextures.LEFT_LIST_LINES 
+                : SecondListTextures.LEFT_LIST_GRID,
+            note.blurSecondList
+        );
+
+    const displayRightList = note.renderTextOnList
+        ? textureCanvas
+        : getBlurredList(sketch, images,
+            note.sheetType === SheetType.LINES 
+                ? SecondListTextures.RIGHT_LIST_LINES 
+                : SecondListTextures.RIGHT_LIST_GRID,
+            note.blurSecondList
+        );
 
     const leftListModel = resourceManager.models.getCurrent(note.lists.leftModelName);
     const rightListModel = resourceManager.models.getCurrent(note.lists.rightModelName);

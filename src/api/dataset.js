@@ -7,7 +7,7 @@ export const sendImages = async (data) => {
         formData.append(
             `images[${index}]`,
             item.image,
-            `image_${index}.jpg` // правильное расширение
+            "image.jpg" // правильное расширение
         );
         formData.append(`text_metrics[${index}]`, JSON.stringify(item.textMetrics));
     });

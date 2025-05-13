@@ -92,14 +92,22 @@ export function createRotationMatrix(n, theta, i, j) {
     return matrix;
 }
 
+
 /**
- * Генерирует случайное число в диапазоне [from, to].
+ * Возвращает случайное число, равномерно распределенное от from до to.
  *
- * @param {number[]} [from, to, add = 0] - Диапазон со смещением add, в котором будет сгенерировано случайное число.
- * @returns {number} Случайное число в диапазоне [from, to, add] со смещением add.
+ * @param {number} from - Нижняя граница интервала.
+ * @param {number} to - Верхняя граница интервала.
+ * @returns {number} Случайное число в интервале [from, to).
  */
-export const randBetween = ([from, to, add = 0]) => {
-    return from + Math.random() * (to - from) + add;
+export const randBetween = (from, to, fix = -1) => {
+    const r = from + Math.random() * (to - from);
+
+    if(fix >= 0){
+        return Number((r).toFixed(fix));
+    }
+
+    return r;
 };
 
 /**

@@ -1,6 +1,5 @@
 import { SheetType } from "@components/P5TextList/renderList";
 import { fontNames } from "@utils/preloadFonts";
-import { randomArrayElement } from "@helpers/math";
 import { generateRandomText } from "@utils/generateRandomText";
 import { 
     dictonaryRusLower,
@@ -12,98 +11,104 @@ import {
 const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
 
 export const handCase2 = () => ({
-    char_variation: {
+    title: "handcase2",
+    renderProps: {
         // Вариация матрицы трансформации для символов
-        // Значения в % от ширины скетча
-        // 0 - scale x
-        // 1 - skew y
-        // 2 - skew x
-        // 3 - scale y
-        transform: {
-            scaleX:{
-                from: 0.75,
-                to: 1.25
+        charVariation: {
+            // Значения в % от ширины скетча
+            // 0 - scale x
+            // 1 - skew y (Наклон по x)
+            // 2 - skew x (Наклон по y)
+            // 3 - scale y
+            transform: {
+                scaleX: {
+                    from: 0.3,
+                    to: -0.3
+                },
+                skewY: {
+                    from: -0.3,
+                    to: 0.3
+                },
+                skewX: 0,
+                scaleY: {
+                    from: 0.3,
+                    to: -0.3
+                }
             },
-            skewY: {
+            // 4 - shift x
+            // 5 - shift y
+            translate: {
+                shiftX: {
+                    from: 0,
+                    to: 0
+                },
+                shiftY: {
+                    from: 0,
+                    to: 0
+                }
+            },
+            // 6 - Rotate
+            rotate: {
                 from: 0,
-                to: 0
-            },
-            skewX: {
-                from: 0,
-                to: 0
-            },
-            scaleY: {
-                from: 0.75,
-                to: 1.25
+                to: 0,
             }
         },
-        // 4 - shift x
-        // 5 - shift y
-        translate: {
-            shiftX: {
-                from: 0,
-                to: 0
-            },
-            shiftY: {
-                from: 0,
-                to: 0
-            }
-        },
-        // 6 - rotate [from, to, add]
-        rotate: {
-            from: 0,
-            to: 0,
-        }
-    },
-
-    line_variation: {
         // Вариация трансформации для строк
-        // Значения в % от ширины скетча
-        // 0 - start
-        // 1 - end
-        // 2 - top
-        // 3 - bottom
-        // 4 - height
-        transform: {
-            start: 10,
-            end: 15,
-            top: 10,
-            bottom: 10,
-            height: 5
-        },
-        // 5 - rotate
-        rotate: {
-            from: -Math.PI/128,
-            to:  Math.PI/128
+        lineVariation: {
+            // Значения в % от ширины скетча
+            // 0 - start
+            // 1 - end
+            // 2 - top
+            // 3 - bottom
+            // 4 - height
+            transform: { //Переопределяется в config
+                start: 15,
+                end: 5,
+                top: 10,
+                bottom: 5,
+                height: 5
+            },
+            // 5 - rotate
+            rotate: {
+                from: -Math.PI/64,
+                to: Math.PI/64
+            }
         }
     },
     // Параметры рендера листа
-    renderListConfig: {
-        sheetType: SheetType.LINES,
+    listProps: {
+        sheetType: SheetType.GRID, //Переопределяется в config
         background: "#DEDEDE",
-        // параметры линий листа
+        // параметры линий листа //Переопределяется в config
         linesOptions: {
-            size: 3.9, //lp - 3.9, lg - 3.03
-            strokeWeight: 0.25,
-            color: "#4E98CE"
+            size: 3.03, //Линии - 3.9, Сетка - 3.03
+            strokeWeight: 0.125,
+            color: "#80aaff", //"#4E98CE"
         },
         // Параметры линий полей листа
         borderLine: {
             pad: 12.12,
-            onLeft: false,
+            onLeft: true, //Переопределяется в config
             color: "#C22929",
         },
+        blur: 0.5,
     },
-
-    // Название шрифта
-    fontName: randomArrayElement(fontNames),
-    // Базовый размер шрифта
-    fontSize: {
-        from: 6,
-        to: 6
-    },
-    // Цвет текста
-    textColor: "#00287A",
-    // Текст для рендера
-    renderText: generateRandomText(unitDictonary, 1000),
+    textProps: {
+        fontName: {
+            cases: fontNames
+        },
+        // Базовый размер шрифта
+        fontSize: {
+            from: 2,
+            to: 8
+        },
+        // Цвет текста
+        color: {
+            from: [0, 40, 122, 200],
+            to: [0, 40, 122, 75]
+        },
+        // Текст для рендера
+        content: generateRandomText(unitDictonary, 1000), 
+        blur: 1
+    }
 });
