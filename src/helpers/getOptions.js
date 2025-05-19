@@ -1,5 +1,6 @@
 export const getRenderOptions = (elem = document) => {
-    const amount = elem.querySelector("#data-amount-input").value;
+    // Значение window для управления через headless браузер
+    const amount = window.renderAmount || elem.querySelector("#data-amount-input").value;
     const compress = elem.querySelector("#data-quality-input").value;
 
     return { amount: Number(amount), compress: Number(compress) };
@@ -7,7 +8,6 @@ export const getRenderOptions = (elem = document) => {
 
 export const getPreviewOptions = (elem = document) => {
     const orbit = elem.querySelector("#webgl-orbit-checkbox").checked;
-    const slides = elem.querySelector("#slides-checkbox").checked;
 
-    return { orbit, slides };
+    return { orbit };
 };

@@ -21,6 +21,7 @@ export default class DecartVector {
             }
             this._x = vectorOrAngle[0][0];
             this._y = vectorOrAngle[1][0];
+            this._rotated = 0;
             return;
         }
   
@@ -82,7 +83,8 @@ export default class DecartVector {
         if (typeof angle !== "number" || !Number.isFinite(angle)) {
             throw new Error("Переданное значение не является числом.");
         }
-        const rotationMatrix = createRotationMatrix(2, angle, 0, 1);
+        const rotationMatrix = createRotationMatrix(2, angle - this._rotated, 0, 1);
+        this._rotated = angle;
 
         // Функция multiplyMatrices должна быть доступна в вашем окружении
         const composition = multiplyMatrices(rotationMatrix, this.matrix());
