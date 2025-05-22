@@ -39,9 +39,8 @@ export async function generateImages(
 
         // Вызыварем рендер со случайными кейсом параметров листа
         listSource.renderText(randomHandwriteCase);
-        const textMetrics = randomGroup.outputs;//listSource.getTextMetrics();
-
-        console.log(textMetrics);
+        const textMetrics = listSource.getTextMetrics();
+        //listSource.getTextMetrics();//Метод для получения метрик текста - listSource.getTextMetrics();
 
         // Также возвращает ссылку на Canvas сцены
         sceneSource.renderScene(sceneParams, previewMode);

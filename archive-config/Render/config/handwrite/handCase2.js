@@ -10,8 +10,8 @@ import {
 // Словарь для генерации текста
 const unitDictonary = dictonaryRusLower + dictonaryLatLower + dictonaryNumbers;
 
-export const handCase1 = () => ({
-    title: "handcase1",
+export const handCase2 = () => ({
+    title: "handcase2",
     renderProps: {
         // Вариация матрицы трансформации для символов
         charVariation: {
@@ -22,20 +22,17 @@ export const handCase1 = () => ({
             // 3 - scale y
             transform: {
                 scaleX: {
-                    from: 1,
-                    to: 1.25
+                    from: 0.3,
+                    to: -0.3
                 },
                 skewY: {
-                    from: 0,
-                    to: 0
+                    from: -0.3,
+                    to: 0.3
                 },
-                skewX: {
-                    from: 0,
-                    to: 0
-                },
+                skewX: 0,
                 scaleY: {
-                    from: 1,
-                    to: 1.25
+                    from: 0.3,
+                    to: -0.3
                 }
             },
             // 4 - shift x
@@ -65,16 +62,16 @@ export const handCase1 = () => ({
             // 3 - bottom
             // 4 - height
             transform: { //Переопределяется в config
-                start: 0,
-                end: 0,
-                top: 0,
-                bottom: 0,
-                height: 0
+                start: 15,
+                end: 5,
+                top: 10,
+                bottom: 5,
+                height: 5
             },
             // 5 - rotate
             rotate: {
-                from: 0,
-                to: 0
+                from: -Math.PI/64,
+                to: Math.PI/64
             }
         }
     },
@@ -102,7 +99,7 @@ export const handCase1 = () => ({
         },
         // Базовый размер шрифта
         fontSize: {
-            from: 3,
+            from: 2,
             to: 8
         },
         // Цвет текста

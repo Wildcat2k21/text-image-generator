@@ -22,8 +22,8 @@ export const handCase1 = () => ({
             // 3 - scale y
             transform: {
                 scaleX: {
-                    from: 1,
-                    to: 1.25
+                    from: 0,
+                    to: 0
                 },
                 skewY: {
                     from: 0,
@@ -34,8 +34,8 @@ export const handCase1 = () => ({
                     to: 0
                 },
                 scaleY: {
-                    from: 1,
-                    to: 1.25
+                    from: 0,
+                    to: 0
                 }
             },
             // 4 - shift x
@@ -102,7 +102,7 @@ export const handCase1 = () => ({
         },
         // Базовый размер шрифта
         fontSize: {
-            from: 3,
+            from: 2,
             to: 8
         },
         // Цвет текста
