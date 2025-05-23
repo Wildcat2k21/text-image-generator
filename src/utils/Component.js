@@ -9,12 +9,13 @@
  * @returns {Element} Созданный DOM элемент
  */
 export function Component({ html, setup }) {
+    // Создаем DOM-элемент
     const wrapper = document.createElement("div");
     wrapper.innerHTML = html.trim();
     const el = wrapper.firstElementChild;
-    
-    if (setup && typeof setup === "function") {
-        setup(el);
+
+    if (typeof setup === "function") {
+        setup.call(el);
     }
 
     return el;

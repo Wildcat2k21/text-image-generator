@@ -1,53 +1,71 @@
-import { randBetween, randomArrayElement } from "../helpers/math";
+import { randBetween, randomArrayElement } from "@helpers/math";
 
-/**
- * Генерирует параметры на основе переданного объекта вариации.
- *
- * Обрабатывает объекты вида { from, to } для генерации случайных чисел или массивов,
- * перечисляемые массивы (выбор одного значения), а также вложенные объекты.
- *
- * @param {Object|Array|number|string} variation - Объект вариации или примитивное значение.
- * @returns {Object|number|string} Сгенерированные параметры.
- */
-export function generateParams(variation) {
-    if (variation && typeof variation === "object") {
-        // Обработка { from, to }
-        if ("from" in variation && "to" in variation) {
-            const from = variation.from;
-            const to = variation.to;
-
-            if (Array.isArray(from) && Array.isArray(to)) {
-                return from.map((f, i) => randBetween([f, to[i]]));
-            }
-
-            return randBetween([from, to]);
-        }
-
-        // Если это массив примитивов — выбираем случайный элемент
-        if (Array.isArray(variation)) {
-            const isPrimitiveArray = variation.every(v =>
-                ["string", "number", "boolean"].includes(typeof v)
-            );
-
-            if (isPrimitiveArray) {
-                return randomArrayElement(variation);
-            }
-
-            // Иначе — массив сложных объектов (можно доработать при необходимости)
-            return variation.map(item => generateParams(item));
-        }
-
-        // Рекурсивно проходим по объекту
-        const result = {};
-        for (const key in variation) {
-            result[key] = generateParams(variation[key]);
-        }
-
-        return result;
+function generate(spec) {
+    const result = {};
+    for (const key in spec) {
+        result[key] = generateParams(spec[key]);
     }
-
-    // Примитивы — возвращаем как есть
-    return variation;
+    return result;
+}
+  
+export function generateParams(descriptor) {
+    // 1) Обработка cases
+    if (descriptor && descriptor.cases !== undefined) {
+        // Выбираем случайный элемент из descriptor.cases
+        const element = randomArrayElement(descriptor.cases);
+        // Рекурсивно генерируем значение для выбранного элемента
+        return generateParams(element);
+    }
+  
+    // 2) Обработка числовых/массивных диапазонов from–to
+    if (descriptor 
+        && descriptor.from !== undefined 
+        && descriptor.to   !== undefined
+    ) {
+        const { from, to, sameValuesFor } = descriptor;
+  
+        // 2.a) Если from/to — массивы
+        if (Array.isArray(from) && Array.isArray(to)) {
+            const length = from.length;
+            const values = new Array(length);
+  
+            if (Array.isArray(sameValuesFor) && sameValuesFor.length > 0) {
+                // Генерируем единое значение для всех индексов из sameValuesFor
+                const idx0 = sameValuesFor[0];
+                const commonVal = randBetween(from[idx0], to[idx0]);
+                sameValuesFor.forEach(i => {
+                    values[i] = commonVal;
+                });
+                // Остальные индексы — свои независимые значения
+                for (let i = 0; i < length; i++) {
+                    if (!sameValuesFor.includes(i)) {
+                        values[i] = randBetween(from[i], to[i]);
+                    }
+                }
+            } else {
+                // Простая генерация поэлементно
+                for (let i = 0; i < length; i++) {
+                    values[i] = randBetween(from[i], to[i]);
+                }
+            }
+  
+            return values;
+        }
+  
+        // 2.b) Обычные числовые from/to
+        return randBetween(descriptor.from, descriptor.to);
+    }
+  
+    // 3) Если это вложенный объект со своими спецификациями
+    if (descriptor 
+        && typeof descriptor === "object" 
+        && !Array.isArray(descriptor)
+    ) {
+        return generate(descriptor);
+    }
+  
+    // 4) Примитивы (string, number, boolean) или любые другие значения — копируем как есть
+    return descriptor;
 }
 
 /**
