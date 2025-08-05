@@ -41,8 +41,6 @@ export async function generateImages(
         listSource.renderText(randomHandwriteCase);
         const textMetrics = randomGroup.outputs;//listSource.getTextMetrics();
 
-        console.log(textMetrics);
-
         // Также возвращает ссылку на Canvas сцены
         sceneSource.renderScene(sceneParams, previewMode);
 
@@ -52,7 +50,6 @@ export async function generateImages(
 
         const outputCanvas = filterController.canvas;
 
-        // console.log(0.85); //выводит 10
         // Создаем blob сцены webGL
         if(format === FORMAT_LIST.BLOB){
             const imageBlob = await new Promise((resolve) => {

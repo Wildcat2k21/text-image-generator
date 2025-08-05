@@ -1,7 +1,8 @@
 // Тестирование модуля math
 
 import { describe, it, expect } from "vitest";
-import { multiplyMatrices, createRotationMatrix, DecartVector } from "../helpers/Math";
+import { multiplyMatrices, createRotationMatrix } from "@helpers/math";
+import DecartVector from "@helpers/math/DecartVector.js";
 
 describe("Модуль math.js", () => {
     it("Должен перемножать матрицы с равенством n = m", () => {

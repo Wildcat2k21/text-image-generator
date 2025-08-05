@@ -1,6 +1,6 @@
 // Модуль для расчета метрик рендуриемого текста в скетче Manuscript
 import {  amplifyAngle, parcentOf } from "./math";
-import fontsOptions from "@src/components/Render/config/fonstOptions.json";
+import fontsOptions from "@src/components/Render/config/fontSkew.json";
 
 // Получение точной высоты символа через canvas API
 const getCharH = (p5, char) => {

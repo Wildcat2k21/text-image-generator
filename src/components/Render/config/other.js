@@ -3,7 +3,7 @@ import { generateParams } from "@utils/params";
 // import { randBetween } from "@helpers/math";
 // import { fontNames } from "@utils/preloadFonts";
 // import { randomArrayElement } from "../../../helpers/math";
-// import fontsOptions from "./fonstOptions.json";
+// import fontsOptions from "./fontSkew.json";
 
 export const useHandcaseListOptions = (sheetType, leftList = true) => {
     let options = {
